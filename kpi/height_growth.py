@@ -1,7 +1,8 @@
 from typing import Dict, List, Optional
 
-from models.kpi_model import KPIResult, Measurement, Provenance
-from kpi.utils import get_max_growth_rate, resolve_instrument_precision
+from kpi.utils import get_max_growth_rate
+from kpi.validation import build_provenance, prepare_growth_window
+from models.kpi_model import KPIResult, Measurement
 
 DEFAULT_MAX_GROWTH_RATE = 1.5  # m/yr
 
@@ -14,30 +15,25 @@ def compute_height_growth(
     instrument_config: Optional[Dict] = None,
     default_max_rate: float = DEFAULT_MAX_GROWTH_RATE,
 ) -> Optional[KPIResult]:
-    if species_config is None:
-        species_config = {}
-    if instrument_config is None:
-        instrument_config = {}
+    species_config = species_config or {}
+    instrument_config = instrument_config or {}
 
-    if len(measurements) < 2:
+    rejection_reasons: List[str] = []
+
+    window = prepare_growth_window(measurements)
+    if window is None:
         return None
 
-    measurements.sort(key=lambda x: x.date)
-    earliest = measurements[0]
-    latest = measurements[-1]
-
-    delta_t = (latest.date - earliest.date).days / 365.25
-    if delta_t == 0:
-        return None
+    earliest, latest, delta_t, flags = window
 
     growth_rate = (latest.value - earliest.value) / delta_t
 
     species = latest.species
-    max_rate = get_max_growth_rate(species, species_config, default=default_max_rate)
     species_label = species if species else "unknown"
 
-    flags: List[str] = []
-    rejection_reasons: List[str] = []
+    max_rate = get_max_growth_rate(
+        species, species_config, default=default_max_rate
+    )
 
     if growth_rate < 0:
         flags.append("WARNING: NEGATIVE_GROWTH")
@@ -45,23 +41,13 @@ def compute_height_growth(
 
     if growth_rate > max_rate:
         flags.append(
-            f"WARNING: HIGH_GROWTH >{max_rate} m/yr (species={species_label})"
+            f"WARNING: EXCEEDS_MAX_GROWTH ({growth_rate:.2f} > {max_rate} m/yr, species={species_label})"
         )
         rejection_reasons.append(
-            f"HIGH_GROWTH_EXCEEDS_MAX (species={species_label}, max={max_rate} m/yr)"
+            f"EXCEEDS_MAX_GROWTH (species={species_label}, max={max_rate} m/yr)"
         )
 
-    precision_info = resolve_instrument_precision(latest.instrument_method, instrument_config)
-
-    provenance = Provenance(
-        instrument_id=latest.instrument_id,
-        calibration_date="2023-01-01",
-        method_version=method_version,
-        instrument_method=latest.instrument_method,
-        precision_cm=precision_info.get("precision_cm"),
-        precision_m=precision_info.get("precision_m"),
-        accuracy_percent=precision_info.get("accuracy_percent"),
-    )
+    provenance = build_provenance(latest, method_version, instrument_config)
 
     return KPIResult(
         tree_id=tree_id,

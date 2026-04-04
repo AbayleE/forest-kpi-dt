@@ -1,4 +1,16 @@
+# Height Growth — Knowledge Graph Mapping
+
+## Entities
+
+- Tree
+- HeightObservation
+- HeightGrowthRate
+
+## Relations
+
+```
 Tree → hasMeasurement → HeightObservation
+
 HeightObservation → value → float
 HeightObservation → timestamp → datetime
 
@@ -11,3 +23,4 @@ HeightGrowthRate → computedFrom → HeightObservation
 HeightGrowthRate → methodVersion → string
 HeightGrowthRate → instrument_id → string
 HeightGrowthRate → hasFlag → string
+```

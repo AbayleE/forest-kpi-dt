@@ -1,10 +1,16 @@
-ENTITY: Tree
-ENTITY: DBH_Observation
-ENTITY: DBH_Growth_KPI
+# DBH Growth — Knowledge Graph Mapping
 
-RELATIONS:
+## Entities
 
+- Tree
+- DBH_Observation
+- DBH_Growth_KPI
+
+## Relations
+
+```
 Tree → hasMeasurement → DBH_Observation
+
 DBH_Observation → value → float
 DBH_Observation → timestamp → datetime
 
@@ -17,3 +23,4 @@ DBH_Growth_KPI → computedFrom → DBH_Observation
 DBH_Growth_KPI → methodVersion → string
 DBH_Growth_KPI → instrument_id → string
 DBH_Growth_KPI → hasFlag → string
+```

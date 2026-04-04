@@ -34,7 +34,7 @@ class KPIResult:
     kpi_name: str
     value: Optional[float]
     unit: str
-    timestamp: datetime
+    timestamp: Optional[datetime]
     flags: List[str]
     provenance: Provenance
     is_rejected: bool = False

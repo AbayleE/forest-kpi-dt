@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Forest KPI Dashboard</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; background: #f4f6f4; color: #222; }
+    header { background: #2d6a4f; color: #fff; padding: 20px 32px; }
+    header h1 { margin: 0; font-size: 1.4rem; }
+    header p { margin: 4px 0 0; font-size: 0.8rem; opacity: .75; }
+    .summary { display: flex; gap: 16px; padding: 24px 32px 0; }
+    .card { background: #fff; border-radius: 6px; padding: 18px 24px; flex: 1;
+             box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+    .card .num { font-size: 2.2rem; font-weight: bold; }
+    .card .lbl { font-size: 0.78rem; color: #666; margin-top: 4px; }
+    .card.c-total .num { color: #2d6a4f; }
+    .card.c-acc .num { color: #1b7a4a; }
+    .card.c-rej .num { color: #c0392b; }
+    .section { padding: 24px 32px 0; }
+    .section h2 { font-size: 0.95rem; color: #2d6a4f; margin: 0 0 12px;
+                   text-transform: uppercase; letter-spacing: .5px; }
+    .tbl-wrap { padding: 24px 32px 48px; }
+    table { width: 100%; border-collapse: collapse; background: #fff;
+             border-radius: 6px; overflow: hidden;
+             box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+    th { background: #2d6a4f; color: #fff; text-align: left;
+          padding: 10px 14px; font-size: 0.82rem; }
+    td { padding: 9px 14px; font-size: 0.82rem; border-bottom: 1px solid #eee; }
+    tr.rejected td { background: #fff6f6; }
+    tr:last-child td { border-bottom: none; }
+    .badge { display: inline-block; padding: 2px 10px; border-radius: 99px;
+              font-size: 0.72rem; font-weight: bold; }
+    .badge.accepted { background: #d8f3dc; color: #1b4332; }
+    .badge.rejected { background: #ffe0e0; color: #7b0000; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Forest KPI Dashboard</h1>
+    <p>Generated 2026-04-04 22:33</p>
+  </header>
+  <div class="summary">
+    <div class="card c-total">
+      <div class="num">14</div>
+      <div class="lbl">Total KPIs</div>
+    </div>
+    <div class="card c-acc">
+      <div class="num">11</div>
+      <div class="lbl">Accepted</div>
+    </div>
+    <div class="card c-rej">
+      <div class="num">3</div>
+      <div class="lbl">Rejected</div>
+    </div>
+  </div>
+  <div class="section">
+    <h2>Input Measurements</h2>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Tree</th><th>Date</th><th>Type</th><th>Value</th>
+          <th>Species</th><th>Instrument ID</th><th>Method</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>T1</td><td>2020-01-01 00:00:00</td><td>DBH</td><td>10.0</td><td>pine</td><td>INST_01</td><td>digital_caliper</td></tr><tr><td>T1</td><td>2022-01-01 00:00:00</td><td>DBH</td><td>14.0</td><td>pine</td><td>INST_01</td><td>digital_caliper</td></tr><tr><td>T1</td><td>2020-01-01 00:00:00</td><td>HEIGHT</td><td>5.0</td><td>pine</td><td>INST_H01</td><td>field_inventory</td></tr><tr><td>T1</td><td>2022-01-01 00:00:00</td><td>HEIGHT</td><td>7.0</td><td>pine</td><td>INST_H01</td><td>field_inventory</td></tr><tr><td>T2</td><td>2021-01-01 00:00:00</td><td>DBH</td><td>8.0</td><td>maple</td><td>INST_02</td><td>diameter_tape</td></tr><tr><td>T2</td><td>2023-01-01 00:00:00</td><td>DBH</td><td>8.5</td><td>maple</td><td>INST_02</td><td>diameter_tape</td></tr><tr><td>T2</td><td>2021-01-01 00:00:00</td><td>HEIGHT</td><td>3.0</td><td>maple</td><td>INST_H02</td><td>satellite_remote_sensing</td></tr><tr><td>T2</td><td>2023-01-01 00:00:00</td><td>HEIGHT</td><td>3.8</td><td>maple</td><td>INST_H02</td><td>satellite_remote_sensing</td></tr><tr><td>T3</td><td>2022-01-01 00:00:00</td><td>DBH</td><td>15.0</td><td>oak</td><td>INST_03</td><td>electronic_dbh</td></tr><tr><td>T3</td><td>2023-01-01 00:00:00</td><td>DBH</td><td>14.5</td><td>oak</td><td>INST_03</td><td>electronic_dbh</td></tr><tr><td>T4</td><td>2022-01-01 00:00:00</td><td>DBH</td><td>20.0</td><td>spruce</td><td>INST_04</td><td>digital_caliper</td></tr><tr><td>T4</td><td>2023-01-01 00:00:00</td><td>DBH</td><td>25.5</td><td>spruce</td><td>INST_04</td><td>digital_caliper</td></tr><tr><td>T5</td><td>2024-01-01 00:00:00</td><td>DBH</td><td>12.0</td><td>&mdash;</td><td>INST_05</td><td>diameter_tape</td></tr><tr><td>T6</td><td>2023-01-01 00:00:00</td><td>DBH</td><td>10.0</td><td>&mdash;</td><td>INST_06</td><td>electronic_dbh</td></tr><tr><td>T6</td><td>2024-01-01 00:00:00</td><td>DBH</td><td>13.6</td><td>&mdash;</td><td>INST_06</td><td>electronic_dbh</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="section">
+    <h2>KPI Results</h2>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Tree</th><th>KPI</th><th>Value</th><th>Instrument</th>
+          <th>Precision</th><th>Version</th><th>Status</th><th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="accepted"><td>T1</td><td>DBH_Growth_Rate</td><td>1.9986 cm/yr</td><td>digital_caliper</td><td>&plusmn;0.1 cm</td><td>v2.0</td><td><span class="badge accepted">ACCEPTED</span></td><td>&mdash;</td></tr><tr class="accepted"><td>T1</td><td>Height_Growth_Rate</td><td>0.9993 m/yr</td><td>field_inventory</td><td>&plusmn;0.5 m</td><td>v1.1</td><td><span class="badge accepted">ACCEPTED</span></td><td>&mdash;</td></tr><tr class="accepted"><td>T2</td><td>DBH_Growth_Rate</td><td>0.2502 cm/yr</td><td>diameter_tape</td><td>&plusmn;0.25 cm</td><td>v2.0</td><td><span class="badge accepted">ACCEPTED</span></td><td>&mdash;</td></tr><tr class="accepted"><td>T2</td><td>Height_Growth_Rate</td><td>0.4003 m/yr</td><td>satellite_remote_sensing</td><td>&plusmn;2.0 m</td><td>v1.1</td><td><span class="badge accepted">ACCEPTED</span></td><td>&mdash;</td></tr><tr class="rejected"><td>T3</td><td>DBH_Growth_Rate</td><td>-0.5003 cm/yr</td><td>electronic_dbh</td><td>98.43% accuracy</td><td>v2.0</td><td><span class="badge rejected">REJECTED</span></td><td>WARNING: NEGATIVE_GROWTH; NEGATIVE_GROWTH</td></tr><tr class="rejected"><td>T4</td><td>DBH_Growth_Rate</td><td>5.5038 cm/yr</td><td>digital_caliper</td><td>&plusmn;0.1 cm</td><td>v2.0</td><td><span class="badge rejected">REJECTED</span></td><td>WARNING: EXCEEDS_MAX_GROWTH (5.50 &gt; 2.0 cm/yr, species=spruce); EXCEEDS_MAX_GROWTH (species=spruce, max=2.0 cm/yr)</td></tr><tr class="rejected"><td>T6</td><td>DBH_Growth_Rate</td><td>3.6025 cm/yr</td><td>electronic_dbh</td><td>98.43% accuracy</td><td>v2.0</td><td><span class="badge rejected">REJECTED</span></td><td>WARNING: EXCEEDS_MAX_GROWTH (3.60 &gt; 2.0 cm/yr, species=unknown); EXCEEDS_MAX_GROWTH (species=unknown, max=2.0 cm/yr)</td></tr><tr class="accepted"><td>T1</td><td>Aboveground_Biomass</td><td>44.8546 kg/tree</td><td>&mdash;</td><td>&mdash;</td><td>Chave2014</td><td><span class="badge accepted">ACCEPTED</span></td><td>ASSUMED_DENSITY</td></tr><tr class="accepted"><td>T2</td><td>Aboveground_Biomass</td><td>9.3292 kg/tree</td><td>&mdash;</td><td>&mdash;</td><td>Chave2014</td><td><span class="badge accepted">ACCEPTED</span></td><td>ASSUMED_DENSITY</td></tr><tr class="accepted"><td>T3</td><td>Aboveground_Biomass</td><td>80.0608 kg/tree</td><td>&mdash;</td><td>&mdash;</td><td>DBH_only</td><td><span class="badge accepted">ACCEPTED</span></td><td>ASSUMED_DENSITY; NO_HEIGHT</td></tr><tr class="accepted"><td>T4</td><td>Aboveground_Biomass</td><td>328.3602 kg/tree</td><td>&mdash;</td><td>&mdash;</td><td>DBH_only</td><td><span class="badge accepted">ACCEPTED</span></td><td>ASSUMED_DENSITY; NO_HEIGHT</td></tr><tr class="accepted"><td>T5</td><td>Aboveground_Biomass</td><td>49.8831 kg/tree</td><td>&mdash;</td><td>&mdash;</td><td>DBH_only</td><td><span class="badge accepted">ACCEPTED</span></td><td>ASSUMED_DENSITY; NO_HEIGHT</td></tr><tr class="accepted"><td>T6</td><td>Aboveground_Biomass</td><td>68.2099 kg/tree</td><td>&mdash;</td><td>&mdash;</td><td>DBH_only</td><td><span class="badge accepted">ACCEPTED</span></td><td>ASSUMED_DENSITY; NO_HEIGHT</td></tr><tr class="accepted"><td>PLOT_1</td><td>Basal_Area</td><td>0.1145 m2/ha</td><td>&mdash;</td><td>&mdash;</td><td>basal_area_v1</td><td><span class="badge accepted">ACCEPTED</span></td><td>WARNING: OUT_OF_TYPICAL_RANGE</td></tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
