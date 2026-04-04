@@ -1,0 +1,5 @@
+{
+  "diameter_tape":   { "precision_cm": 0.25 },
+  "digital_caliper": { "precision_cm": 0.10 },
+  "electronic_dbh":  { "accuracy_percent": 98.43 }
+}
