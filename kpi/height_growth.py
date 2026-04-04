@@ -3,11 +3,10 @@ from typing import Dict, List, Optional
 from models.kpi_model import KPIResult, Measurement, Provenance
 from kpi.utils import get_max_growth_rate, resolve_instrument_precision
 
-# Fallback when a tree's species has no entry in species_max_rates.json
-DEFAULT_MAX_GROWTH_RATE = 2.5  # cm/yr
+DEFAULT_MAX_GROWTH_RATE = 1.5  # m/yr
 
 
-def compute_dbh_growth(
+def compute_height_growth(
     tree_id: str,
     measurements: List[Measurement],
     method_version: str = "v1.1",
@@ -20,7 +19,6 @@ def compute_dbh_growth(
     if instrument_config is None:
         instrument_config = {}
 
-    # Hard reject: cannot compute a rate without at least two observations
     if len(measurements) < 2:
         return None
 
@@ -34,7 +32,6 @@ def compute_dbh_growth(
 
     growth_rate = (latest.value - earliest.value) / delta_t
 
-    # Resolve species-aware max threshold (falls back to default when unknown)
     species = latest.species
     max_rate = get_max_growth_rate(species, species_config, default=default_max_rate)
     species_label = species if species else "unknown"
@@ -48,10 +45,10 @@ def compute_dbh_growth(
 
     if growth_rate > max_rate:
         flags.append(
-            f"WARNING: HIGH_GROWTH >{max_rate} cm/yr (species={species_label})"
+            f"WARNING: HIGH_GROWTH >{max_rate} m/yr (species={species_label})"
         )
         rejection_reasons.append(
-            f"HIGH_GROWTH_EXCEEDS_MAX (species={species_label}, max={max_rate} cm/yr)"
+            f"HIGH_GROWTH_EXCEEDS_MAX (species={species_label}, max={max_rate} m/yr)"
         )
 
     precision_info = resolve_instrument_precision(latest.instrument_method, instrument_config)
@@ -68,9 +65,9 @@ def compute_dbh_growth(
 
     return KPIResult(
         tree_id=tree_id,
-        kpi_name="DBH_Growth_Rate",
+        kpi_name="Height_Growth_Rate",
         value=round(growth_rate, 4),
-        unit="cm/yr",
+        unit="m/yr",
         timestamp=latest.date,
         flags=flags,
         provenance=provenance,

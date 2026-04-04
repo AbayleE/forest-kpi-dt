@@ -11,6 +11,8 @@ class Provenance:
     instrument_method: Optional[str] = None
     # Set when instrument_method is diameter_tape or digital_caliper
     precision_cm: Optional[float] = None
+    # Set when instrument_method is field_inventory or satellite_remote_sensing
+    precision_m: Optional[float] = None
     # Set when instrument_method is electronic_dbh (reported as-is, no conversion)
     accuracy_percent: Optional[float] = None
 
@@ -19,7 +21,8 @@ class Provenance:
 class Measurement:
     tree_id: str
     date: datetime
-    dbh_cm: float
+    measurement_type: str          # "dbh" | "height"
+    value: float
     instrument_id: str
     species: Optional[str] = None
     instrument_method: Optional[str] = None

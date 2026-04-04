@@ -1,0 +1,16 @@
+tree_id,date,measurement_type,value,instrument_id,species,instrument_method
+T1,2020-01-01,dbh,10.0,INST_01,pine,digital_caliper
+T1,2022-01-01,dbh,14.0,INST_01,pine,digital_caliper
+T1,2020-01-01,height,5.0,INST_H01,pine,field_inventory
+T1,2022-01-01,height,7.0,INST_H01,pine,field_inventory
+T2,2021-01-01,dbh,8.0,INST_02,maple,diameter_tape
+T2,2023-01-01,dbh,8.5,INST_02,maple,diameter_tape
+T2,2021-01-01,height,3.0,INST_H02,maple,satellite_remote_sensing
+T2,2023-01-01,height,3.8,INST_H02,maple,satellite_remote_sensing
+T3,2022-01-01,dbh,15.0,INST_03,oak,electronic_dbh
+T3,2023-01-01,dbh,14.5,INST_03,oak,electronic_dbh
+T4,2022-01-01,dbh,20.0,INST_04,spruce,digital_caliper
+T4,2023-01-01,dbh,25.5,INST_04,spruce,digital_caliper
+T5,2024-01-01,dbh,12.0,INST_05,,diameter_tape
+T6,2023-01-01,dbh,10.0,INST_06,,electronic_dbh
+T6,2024-01-01,dbh,13.6,INST_06,,electronic_dbh

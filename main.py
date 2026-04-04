@@ -1,59 +1,70 @@
 import json
-
-import pandas as pd
 from datetime import datetime
 
-from models.kpi_model import Measurement
-from kpi.dbh_growth import compute_dbh_growth
+import pandas as pd
 
-# Load configuration maps
+from kpi.dbh_growth import compute_dbh_growth
+from kpi.height_growth import compute_height_growth
+from models.kpi_model import Measurement
+
+# ── Load configs ───────────────────────────────────────────────────────────────
 with open("config/species_max_rates.json") as f:
-    species_config = json.load(f)
+    dbh_species_config = json.load(f)
+
+with open("config/species_max_height_rates.json") as f:
+    height_species_config = json.load(f)
 
 with open("config/instrument_precision.json") as f:
     instrument_config = json.load(f)
 
-df = pd.read_csv("data/dbh_measurements.csv")
+# ── Load measurements ──────────────────────────────────────────────────────────
+df = pd.read_csv("data/tree_measurements.csv")
 
-# convert to objects
-measurements_by_tree = {}
-results = []
+measurements_by_key: dict = {}  # (tree_id, measurement_type) -> List[Measurement]
 
 for _, row in df.iterrows():
-    species = row["species"] if "species" in df.columns and pd.notna(row["species"]) else None
-    instrument_method = (
-        row["instrument_method"]
-        if "instrument_method" in df.columns and pd.notna(row["instrument_method"])
-        else None
-    )
+    species = row["species"] if pd.notna(row.get("species")) else None
+    instrument_method = row["instrument_method"] if pd.notna(row.get("instrument_method")) else None
     m = Measurement(
         tree_id=row["tree_id"],
         date=datetime.fromisoformat(row["date"]),
-        dbh_cm=row["dbh_cm"],
+        measurement_type=row["measurement_type"],
+        value=row["value"],
         instrument_id=row["instrument_id"],
         species=species,
         instrument_method=instrument_method,
     )
-    measurements_by_tree.setdefault(row["tree_id"], []).append(m)
+    measurements_by_key.setdefault((row["tree_id"], row["measurement_type"]), []).append(m)
 
+# ── Compute KPIs ───────────────────────────────────────────────────────────────
+results = []
 
-# compute KPI
-for tree_id, tree_measurements in measurements_by_tree.items():
-    result = compute_dbh_growth(
-        tree_id,
-        tree_measurements,
-        species_config=species_config,
-        instrument_config=instrument_config,
-    )
+for (tree_id, mtype), tree_measurements in measurements_by_key.items():
+    if mtype == "dbh":
+        result = compute_dbh_growth(
+            tree_id,
+            tree_measurements,
+            species_config=dbh_species_config,
+            instrument_config=instrument_config,
+        )
+    elif mtype == "height":
+        result = compute_height_growth(
+            tree_id,
+            tree_measurements,
+            species_config=height_species_config,
+            instrument_config=instrument_config,
+        )
+    else:
+        continue
 
     if result is None:
         print("-----")
-        print(f"Tree: {tree_id}  [REJECTED — insufficient observations]")
+        print(f"Tree: {tree_id} [{mtype.upper()}]  [REJECTED — insufficient observations]")
         continue
 
     status = "REJECTED" if result.is_rejected else "ACCEPTED"
     print("-----")
-    print(f"Tree: {result.tree_id}  [{status}]")
+    print(f"Tree: {result.tree_id} [{mtype.upper()}]  [{status}]")
     print(f"KPI: {result.kpi_name}")
     print(f"Value: {result.value:.4f} {result.unit}")
     if result.flags:
