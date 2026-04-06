@@ -1,1 +1,2 @@
 pandas>=2.0
+questionary>=1.10

@@ -4,7 +4,7 @@ from kpi.utils import get_max_growth_rate
 from kpi.validation import build_provenance, prepare_growth_window
 from models.kpi_model import KPIResult, Measurement
 
-DEFAULT_MAX_GROWTH_RATE = 2.0  # cm/yr (aligned with KPI spec)
+DEFAULT_MAX_GROWTH_RATE = 2.0
 
 
 def compute_dbh_growth(

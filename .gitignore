@@ -18,9 +18,24 @@ env/
 *~
 
 .mypy_cache/
+
+output.csv
+dashboard.html
 .ruff_cache/
 .pytest_cache/
 
 *.log
-output.csv
+
+# OS metadata
+Thumbs.db
+.DS_Store
+
+# Test coverage
+.coverage
+htmlcov/
+
+# Backup files
+*.bak
+
+/docs
 

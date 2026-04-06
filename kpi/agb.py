@@ -21,7 +21,7 @@ def compute_agb(
     rho: Optional[float] = None,
     instrument_id: str = "UNKNOWN",
 ) -> Optional[KPIResult]:
-    if dbh_cm is None or dbh_cm <= 0:
+    if dbh_cm <= 0:
         return None
 
     flags: List[str] = []

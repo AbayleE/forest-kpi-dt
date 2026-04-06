@@ -46,7 +46,7 @@ def compute_basal_area(
         flags.append("WARNING: OUT_OF_TYPICAL_RANGE")
 
     provenance = Provenance(
-        instrument_id="INVENTORY",
+        instrument_id="inventory",
         calibration_date=None,
         method_version="basal_area_v1",
     )

@@ -1,16 +1,30 @@
-from typing import List, Optional
+from typing import Dict, FrozenSet, List, Optional, Set
 
 import pandas as pd
 
 from app.config_loader import AppConfig
 from app.dashboard import write_dashboard
-from app.data_loader import load_measurements
-from app.dispatch import dispatch_kpi, is_supported_measurement_type
+from app.data_loader import load_measurements, load_plots
 from app.grouping import MeasurementGroups, group_measurements_by_tree_and_type
-from app.reporting import print_insufficient_result, print_kpi_result, write_output_csv
+from app.reporting import print_kpi_result, write_output_csv
 from kpi.agb import compute_agb
 from kpi.basal_area import compute_basal_area
+from kpi.dbh_growth import compute_dbh_growth
+from kpi.height_growth import compute_height_growth
+from kpi.shannon_index import compute_shannon_from_measurements
+from kpi.regeneration_density import compute_regeneration_from_measurements
+from kpi.stand_density import compute_stand_density
 from models.kpi_model import KPIResult, Measurement
+
+ALL_KPIS: FrozenSet[str] = frozenset({
+    "dbh_growth",
+    "height_growth",
+    "agb",
+    "basal_area",
+    "shannon",
+    "regeneration_density",
+    "stand_density",
+})
 
 
 def _latest_valid(measurements: List[Measurement]) -> Optional[Measurement]:
@@ -23,81 +37,108 @@ def _latest_valid(measurements: List[Measurement]) -> Optional[Measurement]:
 def _collect_latest_dbh(grouped: MeasurementGroups) -> List[Measurement]:
     latest: List[Measurement] = []
     for (_, mtype), measurements in grouped.items():
-        if mtype != "dbh":
-            continue
-        m = _latest_valid(measurements)
-        if m is not None:
-            latest.append(m)
+        if mtype == "dbh":
+            m = _latest_valid(measurements)
+            if m is not None:
+                latest.append(m)
     return latest
 
 
-def _compute_agb_results(
-    grouped: MeasurementGroups,
+def _compute_growth_results(
+    grouped: MeasurementGroups, config: AppConfig, selected_kpis: Set[str]
 ) -> List[KPIResult]:
-    tree_ids = {tid for (tid, _) in grouped}
     results: List[KPIResult] = []
+    for (tree_id, mtype), tree_measurements in grouped.items():
+        if mtype == "dbh" and "dbh_growth" in selected_kpis:
+            result = compute_dbh_growth(
+                tree_id, tree_measurements,
+                species_config=config.dbh_species_config,
+                instrument_config=config.instrument_config,
+            )
+        elif mtype == "height" and "height_growth" in selected_kpis:
+            result = compute_height_growth(
+                tree_id, tree_measurements,
+                species_config=config.height_species_config,
+                instrument_config=config.instrument_config,
+            )
+        else:
+            continue
+        if result is not None:
+            results.append(result)
+    return results
 
-    for tree_id in sorted(tree_ids):
+
+def _compute_agb_results(
+    grouped: MeasurementGroups, config: AppConfig, selected_kpis: Set[str]
+) -> List[KPIResult]:
+    if "agb" not in selected_kpis:
+        return []
+    results: List[KPIResult] = []
+    for tree_id in sorted({tid for (tid, _) in grouped}):
         dbh = _latest_valid(grouped.get((tree_id, "dbh"), []))
         if dbh is None:
             continue
-
         height = _latest_valid(grouped.get((tree_id, "height"), []))
+        rho = config.wood_density_config.get(dbh.species) if dbh.species else None
         result = compute_agb(
             tree_id=tree_id,
             dbh_cm=dbh.value,
             height_m=height.value if height else None,
+            rho=rho,
             instrument_id=dbh.instrument_id,
         )
         if result is not None:
             results.append(result)
+    return results
+
+
+def _compute_plot_results(
+    measurements: List[Measurement],
+    grouped: MeasurementGroups,
+    plots: Dict[str, float],
+    selected_kpis: Set[str],
+) -> List[KPIResult]:
+    results: List[KPIResult] = []
+
+    for plot_id, area_ha in plots.items():
+        plot_measurements = [m for m in measurements if m.plot_id == plot_id]
+        plot_grouped = group_measurements_by_tree_and_type(plot_measurements)
+
+        candidates = []
+        if "basal_area" in selected_kpis:
+            candidates.append(compute_basal_area(plot_id, area_ha, _collect_latest_dbh(plot_grouped)))
+        if "shannon" in selected_kpis:
+            candidates.append(compute_shannon_from_measurements(plot_id, plot_measurements))
+        if "regeneration_density" in selected_kpis:
+            candidates.append(compute_regeneration_from_measurements(plot_id, plot_measurements, area_ha))
+        if "stand_density" in selected_kpis:
+            candidates.append(compute_stand_density(plot_id, area_ha, plot_measurements))
+
+        for result in candidates:
+            if result is not None:
+                results.append(result)
 
     return results
 
 
-def run_pipeline(config: AppConfig) -> List[KPIResult]:
+def run_pipeline(config: AppConfig, selected_kpis: Optional[Set[str]] = None) -> List[KPIResult]:
+    if selected_kpis is None:
+        selected_kpis = set(ALL_KPIS)
+
     measurements = load_measurements(config.data_path)
     measurements_df = pd.DataFrame([m.__dict__ for m in measurements])
     grouped = group_measurements_by_tree_and_type(measurements)
+    plots = load_plots(config.plots_path)
 
     results: List[KPIResult] = []
+    results += _compute_growth_results(grouped, config, selected_kpis)
+    results += _compute_agb_results(grouped, config, selected_kpis)
+    results += _compute_plot_results(measurements, grouped, plots, selected_kpis)
 
-    # Tree-level growth KPIs
-    for (tree_id, measurement_type), tree_measurements in grouped.items():
-        if not is_supported_measurement_type(measurement_type):
-            continue
-
-        result = dispatch_kpi(
-            tree_id,
-            measurement_type,
-            tree_measurements,
-            grouped,
-            config,
-        )
-
-        if result is None:
-            print_insufficient_result(tree_id, measurement_type)
-            continue
-
-        print_kpi_result(result, measurement_type)
-        results.append(result)
-
-    # Derived tree-level KPI: AGB
-    for agb_result in _compute_agb_results(grouped):
-        print_kpi_result(agb_result, "agb")
-        results.append(agb_result)
-
-    # Plot-level KPI: Basal Area
-    ba_result = compute_basal_area(
-        plot_id="PLOT_1",
-        area_ha=config.plot_area_ha,
-        measurements=_collect_latest_dbh(grouped),
-    )
-    if ba_result is not None:
-        print_kpi_result(ba_result, "basal_area")
-        results.append(ba_result)
+    for r in results:
+        print_kpi_result(r)
 
     write_output_csv(results, config.output_csv_path)
-    write_dashboard(results, measurements_df, config.dashboard_path)
+    write_dashboard(results, measurements_df, config.dashboard_path, selected_kpis=selected_kpis)
 
     return results

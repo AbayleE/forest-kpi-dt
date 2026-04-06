@@ -17,7 +17,7 @@ HeightObservation → timestamp → datetime
 Tree → hasKPI → HeightGrowthRate
 
 HeightGrowthRate → value → float
-HeightGrowthRate → unit → "m/year"
+HeightGrowthRate → unit → "m/yr"
 HeightGrowthRate → timestamp → datetime
 HeightGrowthRate → computedFrom → HeightObservation
 HeightGrowthRate → methodVersion → string

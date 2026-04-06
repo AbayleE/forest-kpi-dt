@@ -11,27 +11,28 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 class AppConfig:
     dbh_species_config: Dict[str, float]
     height_species_config: Dict[str, float]
+    wood_density_config: Dict[str, float]
     instrument_config: Dict[str, Dict[str, Any]]
     data_path: Path
+    plots_path: Path
     output_csv_path: Path
     dashboard_path: Path
-    plot_area_ha: float = 1.0
-
-
-def _load_json(path: Path) -> Dict[str, Any]:
-    with path.open(encoding="utf-8") as handle:
-        return json.load(handle)
 
 
 def load_app_config(root_dir: Path | None = None) -> AppConfig:
     base_dir = root_dir or ROOT_DIR
-    config_dir = base_dir / "config"
+    config_path = base_dir / "config" / "config.json"
+
+    with config_path.open(encoding="utf-8") as f:
+        cfg = json.load(f)
 
     return AppConfig(
-        dbh_species_config=_load_json(config_dir / "species_max_rates.json"),
-        height_species_config=_load_json(config_dir / "species_max_height_rates.json"),
-        instrument_config=_load_json(config_dir / "instrument_precision.json"),
+        dbh_species_config=cfg["species_max_dbh_rates"],
+        height_species_config=cfg["species_max_height_rates"],
+        wood_density_config=cfg["species_wood_density"],
+        instrument_config=cfg["instrument_precision"],
         data_path=base_dir / "data" / "tree_measurements.csv",
+        plots_path=base_dir / "data" / "plots.csv",
         output_csv_path=base_dir / "output.csv",
         dashboard_path=base_dir / "dashboard.html",
     )

@@ -17,7 +17,7 @@ DBH_Observation → timestamp → datetime
 Tree → hasKPI → DBH_Growth_KPI
 
 DBH_Growth_KPI → value → float
-DBH_Growth_KPI → unit → "cm/year"
+DBH_Growth_KPI → unit → "cm/yr"
 DBH_Growth_KPI → timestamp → datetime
 DBH_Growth_KPI → computedFrom → DBH_Observation
 DBH_Growth_KPI → methodVersion → string

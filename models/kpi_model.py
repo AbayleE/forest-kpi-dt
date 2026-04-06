@@ -26,6 +26,8 @@ class Measurement:
     instrument_id: str
     species: Optional[str] = None
     instrument_method: Optional[str] = None
+    plot_id: Optional[str] = None
+    status: Optional[str] = None
 
 
 @dataclass
@@ -39,3 +41,5 @@ class KPIResult:
     provenance: Provenance
     is_rejected: bool = False
     rejection_reasons: List[str] = field(default_factory=list)
+    tree_count_used: Optional[int] = None
+    tree_count_total: Optional[int] = None

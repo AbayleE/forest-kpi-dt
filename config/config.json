@@ -1,0 +1,33 @@
+{
+  "species_max_dbh_rates": {
+    "oak": 1.5,
+    "pine": 3.0,
+    "spruce": 2.0,
+    "birch": 2.5,
+    "maple": 1.8,
+    "beech": 1.6
+  },
+  "species_max_height_rates": {
+    "oak": 0.8,
+    "pine": 1.2,
+    "spruce": 1.0,
+    "birch": 1.3,
+    "maple": 0.9,
+    "beech": 0.7
+  },
+  "species_wood_density": {
+    "oak": 0.60,
+    "pine": 0.50,
+    "spruce": 0.43,
+    "birch": 0.55,
+    "maple": 0.60,
+    "beech": 0.64
+  },
+  "instrument_precision": {
+    "diameter_tape": { "precision_cm": 0.25 },
+    "digital_caliper": { "precision_cm": 0.10 },
+    "electronic_dbh": { "accuracy_percent": 98.43 },
+    "field_inventory": { "precision_m": 0.5 },
+    "satellite_remote_sensing": { "precision_m": 2.0 }
+  }
+}

@@ -6,101 +6,129 @@ A Python pipeline for computing forest Key Performance Indicators (KPIs) from tr
 
 | KPI | Level | Unit | Description |
 |-----|-------|------|-------------|
-| **DBH Growth Rate** | Tree | cm/yr | Annual diameter-at-breast-height growth rate between two measurement dates |
-| **Height Growth Rate** | Tree | m/yr | Annual height growth rate between two measurement dates |
-| **Aboveground Biomass (AGB)** | Tree | kg/tree | Estimated above-ground biomass using the Chave et al. (2014) allometric model |
-| **Basal Area** | Plot | m²/ha | Cross-sectional area of all tree stems per hectare |
+| **DBH Growth Rate** | Tree | cm/yr | Annual diameter-at-breast-height growth rate |
+| **Height Growth Rate** | Tree | m/yr | Annual height growth rate |
+| **Aboveground Biomass (AGB)** | Tree | kg/tree | Chave et al. (2014) allometric model |
+| **Basal Area** | Plot | m²/ha | Cross-sectional area of all stems per hectare |
+| **Shannon Diversity Index** | Plot | dimensionless | Species diversity from stem counts |
+| **Regeneration Density** | Plot | saplings/ha | Sapling count (DBH < 5 cm) per hectare |
+| **Stand Density** | Plot | trees/ha | Living tree count per hectare |
 
-Each KPI result includes **quality flags**, **rejection tracking**, and **instrument provenance** metadata.
+Each result includes **quality flags**, **rejection tracking**, and **instrument provenance**.
 
 ## Project Structure
 
 ```
 forest-kpi-dt/
-├── main.py                  # Entry point
-├── requirements.txt         # Python dependencies
+├── main.py                  # Entry point — CLI and interactive KPI selection
+├── requirements.txt         # Dependencies
 ├── app/
-│   ├── config_loader.py     # Loads JSON configs into AppConfig dataclass
-│   ├── data_loader.py       # Parses CSV measurements into Measurement objects
-│   ├── dispatch.py          # Routes tree-level KPI computation by measurement type
+│   ├── config_loader.py     # Loads config.json into AppConfig dataclass
+│   ├── data_loader.py       # Parses CSV into Measurement objects; loads plots.csv
 │   ├── grouping.py          # Groups measurements by (tree_id, measurement_type)
-│   ├── pipeline.py          # Orchestrates the full computation pipeline
-│   ├── dashboard.py         # Generates an HTML dashboard from results
+│   ├── pipeline.py          # Orchestrates full KPI computation pipeline
+│   ├── dashboard.py         # Generates HTML dashboard
 │   └── reporting.py         # Console output and CSV export
 ├── kpi/
-│   ├── agb.py               # Aboveground biomass computation
-│   ├── basal_area.py        # Plot-level basal area computation
-│   ├── dbh_growth.py        # DBH growth rate computation
-│   ├── height_growth.py     # Height growth rate computation
-│   ├── utils.py             # Shared utilities (species config lookup, precision)
-│   └── validation.py        # Growth window preparation and provenance builder
+│   ├── agb.py               # Aboveground biomass
+│   ├── basal_area.py        # Plot-level basal area
+│   ├── dbh_growth.py        # DBH growth rate
+│   ├── height_growth.py     # Height growth rate
+│   ├── regeneration_density.py  # Regeneration density
+│   ├── shannon_index.py     # Shannon diversity index
+│   ├── stand_density.py     # Stand density
+│   ├── utils.py             # Species config lookup, instrument precision
+│   └── validation.py        # Growth window prep, provenance builder
 ├── models/
-│   └── kpi_model.py         # Core dataclasses: Measurement, KPIResult, Provenance
+│   └── kpi_model.py         # Dataclasses: Measurement, KPIResult, Provenance
 ├── config/
-│   ├── instrument_precision.json      # Instrument precision metadata
-│   ├── species_max_rates.json         # Max DBH growth rates by species
-│   └── species_max_height_rates.json  # Max height growth rates by species
+│   └── config.json          # Species max rates, wood densities, instrument precision
 ├── data/
-│   └── tree_measurements.csv          # Input measurement data
-├── kg_mapping/
-│   ├── agb_mapping.md                 # KG schema for AGB
-│   ├── basal_area.md                  # KG schema for basal area
-│   ├── dbh_growth_mapping.md          # KG schema for DBH growth
-│   └── height_growth_mapping.md       # KG schema for height growth
-├── output.csv               # Generated KPI results (CSV)
-└── dashboard.html           # Generated KPI dashboard (HTML)
-```
-
-## Installation
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate        # Windows
-# source .venv/bin/activate   # macOS / Linux
-
-pip install -r requirements.txt
+│   ├── tree_measurements.csv   # Input measurements (tree_id, date, type, value, ...)
+│   ├── plots.csv               # Plot metadata (plot_id, area_ha)
+│   └── tree_measurements.json  # JSON mirror (reference only)
+└── kg_mapping/              # Knowledge graph entity schemas
+    ├── agb_mapping.md
+    ├── basal_area.md
+    ├── dbh_growth_mapping.md
+    ├── height_growth_mapping.md
+    ├── regeneration_density.md
+    ├── shannon_index.md
+    └── stand_density.md
 ```
 
 ## Usage
 
 ```bash
+pip install -r requirements.txt
 python main.py
 ```
 
-This reads `data/tree_measurements.csv`, computes all KPIs, and produces:
+### Modes
 
-- **`output.csv`** — tabular KPI results with flags, provenance, and rejection status
-- **`dashboard.html`** — a self-contained HTML dashboard summarizing inputs and results
+| Command | Behaviour |
+|---------|-----------|
+| `python main.py` | Interactive prompt — enter numbers to select KPIs |
+| `python main.py --all` | Compute all 7 KPIs without prompting |
+| `python main.py --kpis agb basal_area` | Compute specific KPIs by key |
+
+**Interactive prompt example:**
+
+```
+========================================================
+  Forest KPI Digital Twin
+========================================================
+
+  Which KPIs would you like to compute?
+
+    1. DBH Growth Rate
+    2. Height Growth Rate
+    3. Aboveground Biomass (AGB)
+    4. Basal Area
+    5. Species Diversity (Shannon)
+    6. Regeneration Density
+    7. Stand Density
+
+  Enter numbers separated by spaces, or 'all'.
+  Example:  1 3 5
+
+  >
+```
+
+### Outputs
+
+- **`output.csv`** — KPI results with flags, provenance, and rejection status
+- **`dashboard.html`** — self-contained HTML dashboard (white, clean tables)
 
 ## Input Data Format
 
-The input CSV (`data/tree_measurements.csv`) expects the following columns:
+### `data/tree_measurements.csv`
+
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| `tree_id` | string | Yes | Unique tree identifier |
+| `date` | ISO date | Yes | Measurement date (YYYY-MM-DD) |
+| `measurement_type` | string | Yes | `dbh` or `height` |
+| `value` | float | Yes | Measured value (cm for DBH, m for height) |
+| `instrument_id` | string | Yes | Instrument identifier |
+| `species` | string | No | Tree species (used for validation thresholds and AGB) |
+| `instrument_method` | string | No | Measurement method (for precision tracking) |
+| `plot_id` | string | No | Plot the tree belongs to (joins to `plots.csv`) |
+| `status` | string | No | `dead` or `sapling` — affects plot-level KPIs |
+
+### `data/plots.csv`
 
 | Column | Type | Description |
 |--------|------|-------------|
-| `tree_id` | string | Unique tree identifier |
-| `date` | ISO date | Measurement date (YYYY-MM-DD) |
-| `measurement_type` | string | `"dbh"` or `"height"` |
-| `value` | float | Measured value (cm for DBH, m for height) |
-| `instrument_id` | string | Instrument identifier |
-| `species` | string | Tree species (optional) |
-| `instrument_method` | string | Measurement method (optional) |
+| `plot_id` | string | Unique plot identifier |
+| `area_ha` | float | Plot area in hectares (used for density KPIs) |
 
-## Configuration
+## Validation
 
-JSON files in `config/` control validation thresholds and instrument metadata:
+Results are flagged and optionally rejected based on:
+- **Negative growth** — value decreased between dates
+- **Exceeds species maximum** — growth rate exceeds configured threshold
+- **Short interval** — less than 6 months between observations
+- **Unknown species** — missing species triggers default thresholds
 
-- **`species_max_rates.json`** — maximum plausible DBH growth rate per species (cm/yr)
-- **`species_max_height_rates.json`** — maximum plausible height growth rate per species (m/yr)
-- **`instrument_precision.json`** — precision/accuracy metadata per instrument method
-
-## Validation and Quality Flags
-
-Results are automatically flagged and optionally rejected based on:
-
-- **Negative growth** — measurement decreased between dates
-- **Exceeds species maximum** — growth rate exceeds configured species threshold
-- **Short measurement interval** — less than 6 months between observations
-- **Missing data** — absent height, species, or DBH values
-
-Rejected results remain in the output with `is_rejected=True` and documented `rejection_reasons`.
+Rejected results remain in output with `is_rejected=True` and documented `rejection_reasons`.
