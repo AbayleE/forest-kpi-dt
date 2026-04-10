@@ -24,3 +24,9 @@ DBH_Growth_KPI → methodVersion → string
 DBH_Growth_KPI → instrument_id → string
 DBH_Growth_KPI → hasFlag → string
 ```
+
+## Implementation
+
+- KPI computation: `kpi/dbh_growth.py` → `compute_dbh_growth()`
+- RDF triples: `kg/graph_builder.py` → `add_kpi_results_to_graph()`, class `FOREST.DBHGrowth`
+- SPARQL queries: `kg/sparql_queries.py` → `query_tree_kpis(graph, tree_id)`

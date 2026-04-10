@@ -7,6 +7,8 @@ from app.dashboard import write_dashboard
 from app.data_loader import load_measurements, load_plots
 from app.grouping import MeasurementGroups, group_measurements_by_tree_and_type
 from app.reporting import print_kpi_result, write_output_csv
+from kg.graph_builder import build_forest_graph
+from kg.serializer import serialize_graph
 from kpi.agb import compute_agb
 from kpi.basal_area import compute_basal_area
 from kpi.dbh_growth import compute_dbh_growth
@@ -140,5 +142,8 @@ def run_pipeline(config: AppConfig, selected_kpis: Optional[Set[str]] = None) ->
 
     write_output_csv(results, config.output_csv_path)
     write_dashboard(results, measurements_df, config.dashboard_path, selected_kpis=selected_kpis)
+
+    kg = build_forest_graph(measurements, results)
+    serialize_graph(kg, config.kg_output_path)
 
     return results

@@ -17,6 +17,7 @@ class AppConfig:
     plots_path: Path
     output_csv_path: Path
     dashboard_path: Path
+    kg_output_path: Path
 
 
 def load_app_config(root_dir: Path | None = None) -> AppConfig:
@@ -35,4 +36,5 @@ def load_app_config(root_dir: Path | None = None) -> AppConfig:
         plots_path=base_dir / "data" / "plots.csv",
         output_csv_path=base_dir / "output.csv",
         dashboard_path=base_dir / "dashboard.html",
+        kg_output_path=base_dir / "output" / "forest_kg.ttl",
     )

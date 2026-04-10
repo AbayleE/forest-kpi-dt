@@ -22,3 +22,9 @@ BasalArea → hasFlag → "WARNING: OUT_OF_TYPICAL_RANGE" (if value < 10 or > 60
 
 - `timestamp` is not set (null) — basal area is a plot-level aggregate without a single inventory date
 - Missing DBH counts are encoded as a flag string, not a separate field
+
+## Implementation
+
+- KPI computation: `kpi/basal_area.py` → `compute_basal_area()`
+- RDF triples: `kg/graph_builder.py` → `add_kpi_results_to_graph()`, class `FOREST.BasalArea`
+- SPARQL queries: `kg/sparql_queries.py` → `query_kpis_for_plot(graph, plot_id)`

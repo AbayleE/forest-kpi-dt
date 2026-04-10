@@ -16,3 +16,9 @@ Tree → hasSpecies → Species
 
 - `treeCountUsed`, `treeCountTotal`, `speciesCount`, and `coverage` are not separate fields;
   coverage threshold and sample-size checks are encoded as flags
+
+## Implementation
+
+- KPI computation: `kpi/shannon_index.py` → `compute_shannon_from_measurements()`
+- RDF triples: `kg/graph_builder.py` → `add_kpi_results_to_graph()`, class `FOREST.SpeciesDiversity`
+- SPARQL queries: `kg/sparql_queries.py` → `query_kpis_for_plot(graph, plot_id)`

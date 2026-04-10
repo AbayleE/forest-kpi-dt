@@ -14,3 +14,9 @@ Tree → hasMeasurement → DBHMeasurement
 DBHMeasurement → value → float
 
 Tree → classifiedAs → Sapling (if DBH < threshold)
+
+## Implementation
+
+- KPI computation: `kpi/regeneration_density.py` → `compute_regeneration_from_measurements()`
+- RDF triples: `kg/graph_builder.py` → `add_kpi_results_to_graph()`, class `FOREST.RegenerationDensity`
+- SPARQL queries: `kg/sparql_queries.py` → `query_kpis_for_plot(graph, plot_id)`

@@ -1,0 +1,873 @@
+@prefix forest: <http://forest-kpi.org/ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://forest-kpi.org/data/tree/T1> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T1/Aboveground_Biomass>,
+        <http://forest-kpi.org/data/kpi/T1/DBH_Growth_Rate>,
+        <http://forest-kpi.org/data/kpi/T1/Height_Growth_Rate> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T1_dbh_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T1_dbh_2023-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T1_height_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T1_height_2023-01-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_1> .
+
+<http://forest-kpi.org/data/tree/T10> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T10/Aboveground_Biomass>,
+        <http://forest-kpi.org/data/kpi/T10/DBH_Growth_Rate>,
+        <http://forest-kpi.org/data/kpi/T10/Height_Growth_Rate> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T10_dbh_2022-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T10_dbh_2023-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T10_height_2022-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T10_height_2023-01-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_1> .
+
+<http://forest-kpi.org/data/tree/T11> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T11/Aboveground_Biomass> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T11_dbh_2023-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T11_height_2023-01-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_1> .
+
+<http://forest-kpi.org/data/tree/T12> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T12/Aboveground_Biomass>,
+        <http://forest-kpi.org/data/kpi/T12/DBH_Growth_Rate>,
+        <http://forest-kpi.org/data/kpi/T12/Height_Growth_Rate> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T12_dbh_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T12_dbh_2023-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T12_height_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T12_height_2023-01-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_1> .
+
+<http://forest-kpi.org/data/tree/T13> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T13/Aboveground_Biomass>,
+        <http://forest-kpi.org/data/kpi/T13/DBH_Growth_Rate>,
+        <http://forest-kpi.org/data/kpi/T13/Height_Growth_Rate> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T13_dbh_2022-06-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T13_dbh_2024-06-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T13_height_2022-06-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T13_height_2024-06-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_2> .
+
+<http://forest-kpi.org/data/tree/T14> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T14/Aboveground_Biomass>,
+        <http://forest-kpi.org/data/kpi/T14/DBH_Growth_Rate>,
+        <http://forest-kpi.org/data/kpi/T14/Height_Growth_Rate> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T14_dbh_2022-06-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T14_dbh_2024-06-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T14_height_2022-06-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T14_height_2024-06-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_2> .
+
+<http://forest-kpi.org/data/tree/T15> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T15/Aboveground_Biomass>,
+        <http://forest-kpi.org/data/kpi/T15/DBH_Growth_Rate>,
+        <http://forest-kpi.org/data/kpi/T15/Height_Growth_Rate> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T15_dbh_2022-06-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T15_dbh_2024-06-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T15_height_2022-06-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T15_height_2024-06-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_2> .
+
+<http://forest-kpi.org/data/tree/T16> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T16/Aboveground_Biomass>,
+        <http://forest-kpi.org/data/kpi/T16/DBH_Growth_Rate>,
+        <http://forest-kpi.org/data/kpi/T16/Height_Growth_Rate> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T16_dbh_2022-06-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T16_dbh_2024-06-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T16_height_2022-06-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T16_height_2024-06-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_2> .
+
+<http://forest-kpi.org/data/tree/T17> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T17/Aboveground_Biomass> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T17_dbh_2023-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T17_height_2023-01-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_2> .
+
+<http://forest-kpi.org/data/tree/T2> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T2/Aboveground_Biomass>,
+        <http://forest-kpi.org/data/kpi/T2/DBH_Growth_Rate>,
+        <http://forest-kpi.org/data/kpi/T2/Height_Growth_Rate> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T2_dbh_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T2_dbh_2023-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T2_height_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T2_height_2023-01-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_1> .
+
+<http://forest-kpi.org/data/tree/T3> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T3/Aboveground_Biomass>,
+        <http://forest-kpi.org/data/kpi/T3/DBH_Growth_Rate>,
+        <http://forest-kpi.org/data/kpi/T3/Height_Growth_Rate> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T3_dbh_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T3_dbh_2023-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T3_height_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T3_height_2023-01-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_1> .
+
+<http://forest-kpi.org/data/tree/T4> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T4/Aboveground_Biomass>,
+        <http://forest-kpi.org/data/kpi/T4/DBH_Growth_Rate>,
+        <http://forest-kpi.org/data/kpi/T4/Height_Growth_Rate> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T4_dbh_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T4_dbh_2023-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T4_height_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T4_height_2023-01-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_1> .
+
+<http://forest-kpi.org/data/tree/T5> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T5/Aboveground_Biomass>,
+        <http://forest-kpi.org/data/kpi/T5/DBH_Growth_Rate>,
+        <http://forest-kpi.org/data/kpi/T5/Height_Growth_Rate> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T5_dbh_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T5_dbh_2023-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T5_height_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T5_height_2023-01-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_1> .
+
+<http://forest-kpi.org/data/tree/T6> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T6/Aboveground_Biomass>,
+        <http://forest-kpi.org/data/kpi/T6/DBH_Growth_Rate>,
+        <http://forest-kpi.org/data/kpi/T6/Height_Growth_Rate> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T6_dbh_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T6_dbh_2023-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T6_height_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T6_height_2023-01-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_1> .
+
+<http://forest-kpi.org/data/tree/T7> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T7/Aboveground_Biomass>,
+        <http://forest-kpi.org/data/kpi/T7/DBH_Growth_Rate>,
+        <http://forest-kpi.org/data/kpi/T7/Height_Growth_Rate> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T7_dbh_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T7_dbh_2023-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T7_height_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T7_height_2023-01-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_1> .
+
+<http://forest-kpi.org/data/tree/T8> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T8/Aboveground_Biomass>,
+        <http://forest-kpi.org/data/kpi/T8/DBH_Growth_Rate>,
+        <http://forest-kpi.org/data/kpi/T8/Height_Growth_Rate> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T8_dbh_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T8_dbh_2023-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T8_height_2021-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T8_height_2023-01-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_1> .
+
+<http://forest-kpi.org/data/tree/T9> a forest:Tree ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/T9/Aboveground_Biomass>,
+        <http://forest-kpi.org/data/kpi/T9/DBH_Growth_Rate>,
+        <http://forest-kpi.org/data/kpi/T9/Height_Growth_Rate> ;
+    forest:hasMeasurement <http://forest-kpi.org/data/measurement/T9_dbh_2022-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T9_dbh_2023-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T9_height_2022-01-01T00_00_00>,
+        <http://forest-kpi.org/data/measurement/T9_height_2023-01-01T00_00_00> ;
+    forest:isIn <http://forest-kpi.org/data/plot/PLOT_1> .
+
+<http://forest-kpi.org/data/kpi/PLOT_1/Basal_Area> a forest:BasalArea ;
+    forest:hasFlag "WARNING: OUT_OF_TYPICAL_RANGE" ;
+    forest:instrumentId "inventory" ;
+    forest:isRejected false ;
+    forest:methodVersion "basal_area_v1" ;
+    forest:unit "m2/ha" ;
+    forest:value 2.507e-01 .
+
+<http://forest-kpi.org/data/kpi/PLOT_1/Regeneration_Density> a forest:RegenerationDensity ;
+    forest:instrumentId "inventory" ;
+    forest:isRejected false ;
+    forest:methodVersion "regen_density_v2" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "saplings/ha" ;
+    forest:value 1e+00 .
+
+<http://forest-kpi.org/data/kpi/PLOT_1/Species_Diversity_Shannon> a forest:SpeciesDiversity ;
+    forest:hasFlag "UNKNOWN_SPECIES_PRESENT" ;
+    forest:instrumentId "inventory" ;
+    forest:isRejected false ;
+    forest:methodVersion "shannon_v2" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "dimensionless" ;
+    forest:value 1.7678e+00 .
+
+<http://forest-kpi.org/data/kpi/PLOT_1/Stand_Density> a forest:StandDensity ;
+    forest:hasFlag "OUTLIER_LOW" ;
+    forest:instrumentId "inventory" ;
+    forest:isRejected false ;
+    forest:methodVersion "stand_density_v1" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:treeCountTotal 12 ;
+    forest:treeCountUsed 12 ;
+    forest:unit "trees/ha" ;
+    forest:value 1.2e+01 .
+
+<http://forest-kpi.org/data/kpi/PLOT_2/Basal_Area> a forest:BasalArea ;
+    forest:hasFlag "WARNING: OUT_OF_TYPICAL_RANGE" ;
+    forest:instrumentId "inventory" ;
+    forest:isRejected false ;
+    forest:methodVersion "basal_area_v1" ;
+    forest:unit "m2/ha" ;
+    forest:value 2.45e-01 .
+
+<http://forest-kpi.org/data/kpi/PLOT_2/Regeneration_Density> a forest:RegenerationDensity ;
+    forest:hasFlag "LOW_SAMPLE_SIZE" ;
+    forest:instrumentId "inventory" ;
+    forest:isRejected false ;
+    forest:methodVersion "regen_density_v2" ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "saplings/ha" ;
+    forest:value 2e+00 .
+
+<http://forest-kpi.org/data/kpi/PLOT_2/Species_Diversity_Shannon> a forest:SpeciesDiversity ;
+    forest:instrumentId "inventory" ;
+    forest:isRejected false ;
+    forest:methodVersion "shannon_v2" ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "dimensionless" ;
+    forest:value 1.6094e+00 .
+
+<http://forest-kpi.org/data/kpi/PLOT_2/Stand_Density> a forest:StandDensity ;
+    forest:hasFlag "OUTLIER_LOW" ;
+    forest:instrumentId "inventory" ;
+    forest:isRejected false ;
+    forest:methodVersion "stand_density_v1" ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:treeCountTotal 5 ;
+    forest:treeCountUsed 4 ;
+    forest:unit "trees/ha" ;
+    forest:value 8e+00 .
+
+<http://forest-kpi.org/data/kpi/T1/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_01" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 6.05152e+01 .
+
+<http://forest-kpi.org/data/kpi/T1/DBH_Growth_Rate> a forest:DBHGrowth ;
+    forest:instrumentId "INST_01" ;
+    forest:isRejected false ;
+    forest:methodVersion "v2.0" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "cm/yr" ;
+    forest:value 2.1014e+00 .
+
+<http://forest-kpi.org/data/kpi/T1/Height_Growth_Rate> a forest:HeightGrowth ;
+    forest:instrumentId "INST_H01" ;
+    forest:isRejected false ;
+    forest:methodVersion "v1.1" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "m/yr" ;
+    forest:value 1.0507e+00 .
+
+<http://forest-kpi.org/data/kpi/T10/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_10" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 6.54625e+01 .
+
+<http://forest-kpi.org/data/kpi/T10/DBH_Growth_Rate> a forest:DBHGrowth ;
+    forest:hasFlag "WARNING: EXCEEDS_MAX_GROWTH (6.00 > 1.8 cm/yr, species=maple)" ;
+    forest:instrumentId "INST_10" ;
+    forest:isRejected true ;
+    forest:methodVersion "v2.0" ;
+    forest:rejectionReason "EXCEEDS_MAX_GROWTH (species=maple, max=1.8 cm/yr)" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "cm/yr" ;
+    forest:value 6.0041e+00 .
+
+<http://forest-kpi.org/data/kpi/T10/Height_Growth_Rate> a forest:HeightGrowth ;
+    forest:hasFlag "WARNING: EXCEEDS_MAX_GROWTH (2.50 > 0.9 m/yr, species=maple)" ;
+    forest:instrumentId "INST_H10" ;
+    forest:isRejected true ;
+    forest:methodVersion "v1.1" ;
+    forest:rejectionReason "EXCEEDS_MAX_GROWTH (species=maple, max=0.9 m/yr)" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "m/yr" ;
+    forest:value 2.5017e+00 .
+
+<http://forest-kpi.org/data/kpi/T11/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_11" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 6.454e-01 .
+
+<http://forest-kpi.org/data/kpi/T12/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:hasFlag "ASSUMED_DENSITY" ;
+    forest:instrumentId "INST_12" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 8.66327e+01 .
+
+<http://forest-kpi.org/data/kpi/T12/DBH_Growth_Rate> a forest:DBHGrowth ;
+    forest:instrumentId "INST_12" ;
+    forest:isRejected false ;
+    forest:methodVersion "v2.0" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "cm/yr" ;
+    forest:value 1.6511e+00 .
+
+<http://forest-kpi.org/data/kpi/T12/Height_Growth_Rate> a forest:HeightGrowth ;
+    forest:instrumentId "INST_H12" ;
+    forest:isRejected false ;
+    forest:methodVersion "v1.1" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "m/yr" ;
+    forest:value 7.505e-01 .
+
+<http://forest-kpi.org/data/kpi/T13/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_13" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 2.266443e+02 .
+
+<http://forest-kpi.org/data/kpi/T13/DBH_Growth_Rate> a forest:DBHGrowth ;
+    forest:instrumentId "INST_13" ;
+    forest:isRejected false ;
+    forest:methodVersion "v2.0" ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "cm/yr" ;
+    forest:value 1.0493e+00 .
+
+<http://forest-kpi.org/data/kpi/T13/Height_Growth_Rate> a forest:HeightGrowth ;
+    forest:instrumentId "INST_H13" ;
+    forest:isRejected false ;
+    forest:methodVersion "v1.1" ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "m/yr" ;
+    forest:value 6.496e-01 .
+
+<http://forest-kpi.org/data/kpi/T14/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_14" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 1.585026e+02 .
+
+<http://forest-kpi.org/data/kpi/T14/DBH_Growth_Rate> a forest:DBHGrowth ;
+    forest:instrumentId "INST_14" ;
+    forest:isRejected false ;
+    forest:methodVersion "v2.0" ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "cm/yr" ;
+    forest:value 9.993e-01 .
+
+<http://forest-kpi.org/data/kpi/T14/Height_Growth_Rate> a forest:HeightGrowth ;
+    forest:instrumentId "INST_H14" ;
+    forest:isRejected false ;
+    forest:methodVersion "v1.1" ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "m/yr" ;
+    forest:value 5.496e-01 .
+
+<http://forest-kpi.org/data/kpi/T15/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_15" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 9.65151e+01 .
+
+<http://forest-kpi.org/data/kpi/T15/DBH_Growth_Rate> a forest:DBHGrowth ;
+    forest:instrumentId "INST_15" ;
+    forest:isRejected false ;
+    forest:methodVersion "v2.0" ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "cm/yr" ;
+    forest:value 1.2491e+00 .
+
+<http://forest-kpi.org/data/kpi/T15/Height_Growth_Rate> a forest:HeightGrowth ;
+    forest:instrumentId "INST_H15" ;
+    forest:isRejected false ;
+    forest:methodVersion "v1.1" ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "m/yr" ;
+    forest:value 7.495e-01 .
+
+<http://forest-kpi.org/data/kpi/T16/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_16" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 2.9479e+01 .
+
+<http://forest-kpi.org/data/kpi/T16/DBH_Growth_Rate> a forest:DBHGrowth ;
+    forest:instrumentId "INST_16" ;
+    forest:isRejected false ;
+    forest:methodVersion "v2.0" ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "cm/yr" ;
+    forest:value 0e+00 .
+
+<http://forest-kpi.org/data/kpi/T16/Height_Growth_Rate> a forest:HeightGrowth ;
+    forest:instrumentId "INST_H16" ;
+    forest:isRejected false ;
+    forest:methodVersion "v1.1" ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "m/yr" ;
+    forest:value 0e+00 .
+
+<http://forest-kpi.org/data/kpi/T17/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_17" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 3.348e-01 .
+
+<http://forest-kpi.org/data/kpi/T2/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_02" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 2.12595e+01 .
+
+<http://forest-kpi.org/data/kpi/T2/DBH_Growth_Rate> a forest:DBHGrowth ;
+    forest:instrumentId "INST_02" ;
+    forest:isRejected false ;
+    forest:methodVersion "v2.0" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "cm/yr" ;
+    forest:value 6.504e-01 .
+
+<http://forest-kpi.org/data/kpi/T2/Height_Growth_Rate> a forest:HeightGrowth ;
+    forest:instrumentId "INST_H02" ;
+    forest:isRejected false ;
+    forest:methodVersion "v1.1" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "m/yr" ;
+    forest:value 6.004e-01 .
+
+<http://forest-kpi.org/data/kpi/T3/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_03" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 1.433567e+02 .
+
+<http://forest-kpi.org/data/kpi/T3/DBH_Growth_Rate> a forest:DBHGrowth ;
+    forest:instrumentId "INST_03" ;
+    forest:isRejected false ;
+    forest:methodVersion "v2.0" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "cm/yr" ;
+    forest:value 1.2008e+00 .
+
+<http://forest-kpi.org/data/kpi/T3/Height_Growth_Rate> a forest:HeightGrowth ;
+    forest:instrumentId "INST_H03" ;
+    forest:isRejected false ;
+    forest:methodVersion "v1.1" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "m/yr" ;
+    forest:value 6.504e-01 .
+
+<http://forest-kpi.org/data/kpi/T4/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_04" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 6.94912e+01 .
+
+<http://forest-kpi.org/data/kpi/T4/DBH_Growth_Rate> a forest:DBHGrowth ;
+    forest:instrumentId "INST_04" ;
+    forest:isRejected false ;
+    forest:methodVersion "v2.0" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "cm/yr" ;
+    forest:value 1.7512e+00 .
+
+<http://forest-kpi.org/data/kpi/T4/Height_Growth_Rate> a forest:HeightGrowth ;
+    forest:instrumentId "INST_H04" ;
+    forest:isRejected false ;
+    forest:methodVersion "v1.1" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "m/yr" ;
+    forest:value 9.006e-01 .
+
+<http://forest-kpi.org/data/kpi/T5/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_05" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 5.43305e+01 .
+
+<http://forest-kpi.org/data/kpi/T5/DBH_Growth_Rate> a forest:DBHGrowth ;
+    forest:instrumentId "INST_05" ;
+    forest:isRejected false ;
+    forest:methodVersion "v2.0" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "cm/yr" ;
+    forest:value 1.9013e+00 .
+
+<http://forest-kpi.org/data/kpi/T5/Height_Growth_Rate> a forest:HeightGrowth ;
+    forest:instrumentId "INST_H05" ;
+    forest:isRejected false ;
+    forest:methodVersion "v1.1" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "m/yr" ;
+    forest:value 1.2008e+00 .
+
+<http://forest-kpi.org/data/kpi/T6/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_06" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 1.014173e+02 .
+
+<http://forest-kpi.org/data/kpi/T6/DBH_Growth_Rate> a forest:DBHGrowth ;
+    forest:instrumentId "INST_06" ;
+    forest:isRejected false ;
+    forest:methodVersion "v2.0" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "cm/yr" ;
+    forest:value 1.3009e+00 .
+
+<http://forest-kpi.org/data/kpi/T6/Height_Growth_Rate> a forest:HeightGrowth ;
+    forest:instrumentId "INST_H06" ;
+    forest:isRejected false ;
+    forest:methodVersion "v1.1" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "m/yr" ;
+    forest:value 5.504e-01 .
+
+<http://forest-kpi.org/data/kpi/T7/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_07" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 1.871144e+02 .
+
+<http://forest-kpi.org/data/kpi/T7/DBH_Growth_Rate> a forest:DBHGrowth ;
+    forest:instrumentId "INST_07" ;
+    forest:isRejected false ;
+    forest:methodVersion "v2.0" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "cm/yr" ;
+    forest:value 1.401e+00 .
+
+<http://forest-kpi.org/data/kpi/T7/Height_Growth_Rate> a forest:HeightGrowth ;
+    forest:instrumentId "INST_H07" ;
+    forest:isRejected false ;
+    forest:methodVersion "v1.1" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "m/yr" ;
+    forest:value 1.0007e+00 .
+
+<http://forest-kpi.org/data/kpi/T8/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_08" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 6.07488e+01 .
+
+<http://forest-kpi.org/data/kpi/T8/DBH_Growth_Rate> a forest:DBHGrowth ;
+    forest:instrumentId "INST_08" ;
+    forest:isRejected false ;
+    forest:methodVersion "v2.0" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "cm/yr" ;
+    forest:value 1.0507e+00 .
+
+<http://forest-kpi.org/data/kpi/T8/Height_Growth_Rate> a forest:HeightGrowth ;
+    forest:instrumentId "INST_H08" ;
+    forest:isRejected false ;
+    forest:methodVersion "v1.1" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "m/yr" ;
+    forest:value 6.504e-01 .
+
+<http://forest-kpi.org/data/kpi/T9/Aboveground_Biomass> a forest:AbovegroundBiomass ;
+    forest:instrumentId "INST_09" ;
+    forest:isRejected false ;
+    forest:methodVersion "Chave2014" ;
+    forest:unit "kg/tree" ;
+    forest:value 4.55675e+01 .
+
+<http://forest-kpi.org/data/kpi/T9/DBH_Growth_Rate> a forest:DBHGrowth ;
+    forest:hasFlag "WARNING: NEGATIVE_GROWTH" ;
+    forest:instrumentId "INST_09" ;
+    forest:isRejected true ;
+    forest:methodVersion "v2.0" ;
+    forest:rejectionReason "NEGATIVE_GROWTH" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "cm/yr" ;
+    forest:value -8.005e-01 .
+
+<http://forest-kpi.org/data/kpi/T9/Height_Growth_Rate> a forest:HeightGrowth ;
+    forest:hasFlag "WARNING: NEGATIVE_GROWTH" ;
+    forest:instrumentId "INST_H09" ;
+    forest:isRejected true ;
+    forest:methodVersion "v1.1" ;
+    forest:rejectionReason "NEGATIVE_GROWTH" ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:unit "m/yr" ;
+    forest:value -5.003e-01 .
+
+<http://forest-kpi.org/data/measurement/T10_dbh_2022-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2022-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1e+01 .
+
+<http://forest-kpi.org/data/measurement/T10_dbh_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.6e+01 .
+
+<http://forest-kpi.org/data/measurement/T10_height_2022-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2022-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 5e+00 .
+
+<http://forest-kpi.org/data/measurement/T10_height_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 7.5e+00 .
+
+<http://forest-kpi.org/data/measurement/T11_dbh_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 3.2e+00 .
+
+<http://forest-kpi.org/data/measurement/T11_height_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.8e+00 .
+
+<http://forest-kpi.org/data/measurement/T12_dbh_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.45e+01 .
+
+<http://forest-kpi.org/data/measurement/T12_dbh_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.78e+01 .
+
+<http://forest-kpi.org/data/measurement/T12_height_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 7e+00 .
+
+<http://forest-kpi.org/data/measurement/T12_height_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 8.5e+00 .
+
+<http://forest-kpi.org/data/measurement/T13_dbh_2022-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2022-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 2.2e+01 .
+
+<http://forest-kpi.org/data/measurement/T13_dbh_2024-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 2.41e+01 .
+
+<http://forest-kpi.org/data/measurement/T13_height_2022-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2022-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.05e+01 .
+
+<http://forest-kpi.org/data/measurement/T13_height_2024-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.18e+01 .
+
+<http://forest-kpi.org/data/measurement/T14_dbh_2022-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2022-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.9e+01 .
+
+<http://forest-kpi.org/data/measurement/T14_dbh_2024-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 2.1e+01 .
+
+<http://forest-kpi.org/data/measurement/T14_height_2022-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2022-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 9e+00 .
+
+<http://forest-kpi.org/data/measurement/T14_height_2024-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.01e+01 .
+
+<http://forest-kpi.org/data/measurement/T15_dbh_2022-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2022-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.65e+01 .
+
+<http://forest-kpi.org/data/measurement/T15_dbh_2024-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.9e+01 .
+
+<http://forest-kpi.org/data/measurement/T15_height_2022-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2022-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 8e+00 .
+
+<http://forest-kpi.org/data/measurement/T15_height_2024-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 9.5e+00 .
+
+<http://forest-kpi.org/data/measurement/T16_dbh_2022-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2022-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.3e+01 .
+
+<http://forest-kpi.org/data/measurement/T16_dbh_2024-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.3e+01 .
+
+<http://forest-kpi.org/data/measurement/T16_height_2022-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2022-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 7e+00 .
+
+<http://forest-kpi.org/data/measurement/T16_height_2024-06-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2024-06-01T00:00:00"^^xsd:dateTime ;
+    forest:value 7e+00 .
+
+<http://forest-kpi.org/data/measurement/T17_dbh_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 2.8e+00 .
+
+<http://forest-kpi.org/data/measurement/T17_height_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.2e+00 .
+
+<http://forest-kpi.org/data/measurement/T1_dbh_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.2e+01 .
+
+<http://forest-kpi.org/data/measurement/T1_dbh_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.62e+01 .
+
+<http://forest-kpi.org/data/measurement/T1_height_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 6e+00 .
+
+<http://forest-kpi.org/data/measurement/T1_height_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 8.1e+00 .
+
+<http://forest-kpi.org/data/measurement/T2_dbh_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 9.5e+00 .
+
+<http://forest-kpi.org/data/measurement/T2_dbh_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.08e+01 .
+
+<http://forest-kpi.org/data/measurement/T2_height_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 4e+00 .
+
+<http://forest-kpi.org/data/measurement/T2_height_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 5.2e+00 .
+
+<http://forest-kpi.org/data/measurement/T3_dbh_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.8e+01 .
+
+<http://forest-kpi.org/data/measurement/T3_dbh_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 2.04e+01 .
+
+<http://forest-kpi.org/data/measurement/T3_height_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 9e+00 .
+
+<http://forest-kpi.org/data/measurement/T3_height_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.03e+01 .
+
+<http://forest-kpi.org/data/measurement/T4_dbh_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.4e+01 .
+
+<http://forest-kpi.org/data/measurement/T4_dbh_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.75e+01 .
+
+<http://forest-kpi.org/data/measurement/T4_height_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 7.5e+00 .
+
+<http://forest-kpi.org/data/measurement/T4_height_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 9.3e+00 .
+
+<http://forest-kpi.org/data/measurement/T5_dbh_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.1e+01 .
+
+<http://forest-kpi.org/data/measurement/T5_dbh_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.48e+01 .
+
+<http://forest-kpi.org/data/measurement/T5_height_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 5.5e+00 .
+
+<http://forest-kpi.org/data/measurement/T5_height_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 7.9e+00 .
+
+<http://forest-kpi.org/data/measurement/T6_dbh_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.5e+01 .
+
+<http://forest-kpi.org/data/measurement/T6_dbh_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.76e+01 .
+
+<http://forest-kpi.org/data/measurement/T6_height_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 8e+00 .
+
+<http://forest-kpi.org/data/measurement/T6_height_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 9.1e+00 .
+
+<http://forest-kpi.org/data/measurement/T7_dbh_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 2e+01 .
+
+<http://forest-kpi.org/data/measurement/T7_dbh_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 2.28e+01 .
+
+<http://forest-kpi.org/data/measurement/T7_height_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.1e+01 .
+
+<http://forest-kpi.org/data/measurement/T7_height_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.3e+01 .
+
+<http://forest-kpi.org/data/measurement/T8_dbh_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.3e+01 .
+
+<http://forest-kpi.org/data/measurement/T8_dbh_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.51e+01 .
+
+<http://forest-kpi.org/data/measurement/T8_height_2021-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2021-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 6.5e+00 .
+
+<http://forest-kpi.org/data/measurement/T8_height_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 7.8e+00 .
+
+<http://forest-kpi.org/data/measurement/T9_dbh_2022-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2022-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.6e+01 .
+
+<http://forest-kpi.org/data/measurement/T9_dbh_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 1.52e+01 .
+
+<http://forest-kpi.org/data/measurement/T9_height_2022-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2022-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 8.5e+00 .
+
+<http://forest-kpi.org/data/measurement/T9_height_2023-01-01T00_00_00> a forest:Measurement ;
+    forest:timestamp "2023-01-01T00:00:00"^^xsd:dateTime ;
+    forest:value 8e+00 .
+
+<http://forest-kpi.org/data/plot/PLOT_2> a forest:Plot ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/PLOT_2/Basal_Area>,
+        <http://forest-kpi.org/data/kpi/PLOT_2/Regeneration_Density>,
+        <http://forest-kpi.org/data/kpi/PLOT_2/Species_Diversity_Shannon>,
+        <http://forest-kpi.org/data/kpi/PLOT_2/Stand_Density> .
+
+<http://forest-kpi.org/data/plot/PLOT_1> a forest:Plot ;
+    forest:hasKPI <http://forest-kpi.org/data/kpi/PLOT_1/Basal_Area>,
+        <http://forest-kpi.org/data/kpi/PLOT_1/Regeneration_Density>,
+        <http://forest-kpi.org/data/kpi/PLOT_1/Species_Diversity_Shannon>,
+        <http://forest-kpi.org/data/kpi/PLOT_1/Stand_Density> .
+

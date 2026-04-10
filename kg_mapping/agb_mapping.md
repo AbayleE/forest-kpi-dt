@@ -29,3 +29,9 @@ AGB → hasFlag → string
 
 - Species-specific `ρ` (g/cm³) is read from `species_wood_density` in `config.json`
 - If species is unknown or not configured, `ρ = 0.57` (pantropical mean) is used and flag `ASSUMED_DENSITY` is added
+
+## Implementation
+
+- KPI computation: `kpi/agb.py` → `compute_agb()`
+- RDF triples: `kg/graph_builder.py` → `add_kpi_results_to_graph()`, class `FOREST.AbovegroundBiomass`
+- SPARQL queries: `kg/sparql_queries.py` → `query_tree_kpis(graph, tree_id)`

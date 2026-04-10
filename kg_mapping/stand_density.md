@@ -18,3 +18,9 @@ Tree → hasStatus → "alive" | "dead" | null
 - Trees with missing `status` are excluded and their count is added as flag `MISSING_STATUS_COUNT: N`
 - Density < 50 trees/ha → flag `OUTLIER_LOW`; > 10 000 trees/ha → flag `OUTLIER_HIGH`
 - `treeCountUsed` and `treeCountTotal` are real fields on `KPIResult`
+
+## Implementation
+
+- KPI computation: `kpi/stand_density.py` → `compute_stand_density()`
+- RDF triples: `kg/graph_builder.py` → `add_kpi_results_to_graph()`, class `FOREST.StandDensity`
+- SPARQL queries: `kg/sparql_queries.py` → `query_kpis_for_plot(graph, plot_id)`
