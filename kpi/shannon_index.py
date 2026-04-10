@@ -1,8 +1,10 @@
+# Shannon Species Diversity Index — H' = -Σ p_i * ln(p_i)
 import math
 from collections import Counter
 from typing import List
 
-from models.kpi_model import KPIResult, Measurement, Provenance
+from kpi.utils import get_latest_dbh_per_tree, inventory_provenance
+from models.kpi_model import KPIResult, Measurement
 
 
 def compute_shannon_from_measurements(
@@ -14,31 +16,17 @@ def compute_shannon_from_measurements(
     flags = []
     rejection_reasons = []
 
-    latest_per_tree = {}
-
-    for m in measurements:
-        if m.measurement_type != "dbh":
-            continue
-
-        if m.tree_id not in latest_per_tree or m.date > latest_per_tree[m.tree_id].date:
-            latest_per_tree[m.tree_id] = m
-
-    trees = list(latest_per_tree.values())
+    trees = get_latest_dbh_per_tree(measurements)
 
     if len(trees) < 5:
         return KPIResult(
-            tree_id=plot_id,
+            entity_id=plot_id,
             kpi_name="Species_Diversity_Shannon",
             value=None,
             unit="dimensionless",
             timestamp=None,
             flags=["INSUFFICIENT_SAMPLE_SIZE"],
-            provenance=Provenance(
-                instrument_id="inventory",
-                calibration_date=None,
-                method_version=method_version,
-                instrument_method="field_inventory",
-            ),
+            provenance=inventory_provenance(method_version),
             is_rejected=True,
             rejection_reasons=["INSUFFICIENT_SAMPLE_SIZE"],
         )
@@ -59,22 +47,16 @@ def compute_shannon_from_measurements(
     H = 0.0
     for count in species_counts.values():
         p = count / len(known)
-        if p > 0:
-            H -= p * math.log(p)
+        H -= p * math.log(p)
 
     return KPIResult(
-        tree_id=plot_id,
+        entity_id=plot_id,
         kpi_name="Species_Diversity_Shannon",
         value=round(H, 4),
         unit="dimensionless",
         timestamp=max(t.date for t in trees),
         flags=flags,
-        provenance=Provenance(
-            instrument_id="inventory",
-            calibration_date=None,
-            method_version=method_version,
-            instrument_method="field_inventory",
-        ),
+        provenance=inventory_provenance(method_version),
         is_rejected=False,
         rejection_reasons=[],
     )

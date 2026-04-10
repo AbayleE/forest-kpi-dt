@@ -9,11 +9,8 @@ class Provenance:
     calibration_date: Optional[str]
     method_version: str
     instrument_method: Optional[str] = None
-    # Set when instrument_method is diameter_tape or digital_caliper
     precision_cm: Optional[float] = None
-    # Set when instrument_method is field_inventory or satellite_remote_sensing
     precision_m: Optional[float] = None
-    # Set when instrument_method is electronic_dbh (reported as-is, no conversion)
     accuracy_percent: Optional[float] = None
 
 
@@ -32,7 +29,8 @@ class Measurement:
 
 @dataclass
 class KPIResult:
-    tree_id: str
+    # entity_id holds a tree ID for tree-level KPIs, or a plot ID for plot-level KPIs
+    entity_id: str
     kpi_name: str
     value: Optional[float]
     unit: str

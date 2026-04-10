@@ -1,7 +1,10 @@
+# Basal Area — total cross-sectional stem area, scaled to m²/ha
+# Formula per tree: BA = π × (DBH / 200)²  (DBH cm → radius m)
 import math
 from typing import List, Optional
 
-from models.kpi_model import KPIResult, Measurement, Provenance
+from kpi.utils import inventory_provenance
+from models.kpi_model import KPIResult, Measurement
 
 MIN_TYPICAL_BA_HA = 10   # m²/ha
 MAX_TYPICAL_BA_HA = 60   # m²/ha
@@ -11,6 +14,7 @@ def compute_basal_area(
     plot_id: str,
     area_ha: float,
     measurements: List[Measurement],
+    method_version: str = "basal_area_v1",
 ) -> Optional[KPIResult]:
     if area_ha is None or area_ha <= 0:
         return None
@@ -44,18 +48,15 @@ def compute_basal_area(
 
     if basal_area_ha < MIN_TYPICAL_BA_HA or basal_area_ha > MAX_TYPICAL_BA_HA:
         flags.append("WARNING: OUT_OF_TYPICAL_RANGE")
+        rejection_reasons.append("OUT_OF_TYPICAL_RANGE")
 
-    provenance = Provenance(
-        instrument_id="inventory",
-        calibration_date=None,
-        method_version="basal_area_v1",
-    )
+    provenance = inventory_provenance(method_version)
 
     return KPIResult(
-        tree_id=plot_id,
+        entity_id=plot_id,
         kpi_name="Basal_Area",
         value=round(basal_area_ha, 4),
-        unit="m2/ha",
+        unit="m²/ha",
         timestamp=None,
         flags=flags,
         provenance=provenance,

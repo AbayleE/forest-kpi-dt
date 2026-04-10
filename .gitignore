@@ -19,9 +19,9 @@ env/
 
 .mypy_cache/
 
-output.csv
-dashboard.html
+output/
 .ruff_cache/
+kg/sparql_queries.py
 .pytest_cache/
 
 *.log
@@ -38,4 +38,6 @@ htmlcov/
 *.bak
 
 /docs
-
+/output
+dashboard.html
+output.csv

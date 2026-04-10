@@ -2,12 +2,9 @@ from collections import defaultdict
 from datetime import datetime as dt
 from html import escape
 from pathlib import Path
-from typing import Dict, Iterable, List, Set
+from typing import Dict, Iterable, List
 
-import pandas as pd
-
-from models.kpi_model import KPIResult, Provenance
-
+from models.kpi_model import KPIResult, Measurement, Provenance
 
 
 def _precision_str(p: Provenance) -> str:
@@ -21,6 +18,7 @@ def _precision_str(p: Provenance) -> str:
 
 
 def _disp(value: object) -> str:
+
     if value is None:
         return "&mdash;"
     text = str(value)
@@ -34,11 +32,65 @@ def _notes(flags: List[str], rejections: List[str]) -> str:
     return escape("; ".join(parts)) if parts else "&mdash;"
 
 
+def _tree_row(r: KPIResult) -> str:
+    val = f"{r.value:.4f}" if r.value is not None else "&mdash;"
+    row_cls = ' class="rejected"' if r.is_rejected else ""
+    status = "Rejected" if r.is_rejected else "Accepted"
+    return (
+        f"<tr{row_cls}>"
+        f"<td>{_disp(r.entity_id)}</td>"
+        f"<td>{_disp(r.kpi_name.replace('_', ' '))}</td>"
+        f"<td>{val}</td>"
+        f"<td>{escape(r.unit)}</td>"
+        f"<td>{_disp(r.provenance.instrument_id)}</td>"
+        f"<td>{_precision_str(r.provenance)}</td>"
+        f"<td>{status}</td>"
+        f"<td>{_notes(r.flags, r.rejection_reasons)}</td>"
+        "</tr>"
+    )
+
+
+def _plot_row(pid: str, r: KPIResult) -> str:
+    val = f"{r.value:.4f}" if r.value is not None else "&mdash;"
+    row_cls = ' class="rejected"' if r.is_rejected else ""
+    status = "Rejected" if r.is_rejected else "Accepted"
+    trees_used = (
+        f"{r.tree_count_used} / {r.tree_count_total}"
+        if r.tree_count_used is not None else "&mdash;"
+    )
+    return (
+        f"<tr{row_cls}>"
+        f"<td>{_disp(pid)}</td>"
+        f"<td>{_disp(r.kpi_name.replace('_', ' '))}</td>"
+        f"<td>{val}</td>"
+        f"<td>{escape(r.unit)}</td>"
+        f"<td>{trees_used}</td>"
+        f"<td>{status}</td>"
+        f"<td>{_notes(r.flags, r.rejection_reasons)}</td>"
+        "</tr>"
+    )
+
+
+def _measurement_row(m: Measurement) -> str:
+    return (
+        "<tr>"
+        f"<td>{_disp(m.tree_id)}</td>"
+        f"<td>{_disp(m.plot_id)}</td>"
+        f"<td>{_disp(m.date)}</td>"
+        f"<td>{_disp(m.measurement_type.upper())}</td>"
+        f"<td>{_disp(m.value)}</td>"
+        f"<td>{_disp(m.species)}</td>"
+        f"<td>{_disp(m.instrument_id)}</td>"
+        f"<td>{_disp(m.instrument_method)}</td>"
+        f"<td>{_disp(m.status)}</td>"
+        "</tr>"
+    )
+
+
 def write_dashboard(
     kpi_results: Iterable[KPIResult],
-    measurements_df: pd.DataFrame,
+    measurements: List[Measurement],
     path: Path,
-    selected_kpis: Set[str] = None,
 ) -> None:
     results_list: List[KPIResult] = list(kpi_results)
     accepted = [r for r in results_list if not r.is_rejected]
@@ -49,66 +101,15 @@ def write_dashboard(
     plot_results: Dict[str, List[KPIResult]] = defaultdict(list)
     for r in results_list:
         if r.kpi_name in plot_kpi_names:
-            plot_results[r.tree_id].append(r)
+            plot_results[r.entity_id].append(r)
 
-    # ── tree-level rows ─────────────────────────────────────────────────────
-    tree_rows_html = ""
-    for r in tree_results:
-        val = f"{r.value:.4f}" if r.value is not None else "&mdash;"
-        row_cls = ' class="rejected"' if r.is_rejected else ""
-        status = "Rejected" if r.is_rejected else "Accepted"
-        tree_rows_html += (
-            f"<tr{row_cls}>"
-            f"<td>{_disp(r.tree_id)}</td>"
-            f"<td>{_disp(r.kpi_name.replace('_', ' '))}</td>"
-            f"<td>{val}</td>"
-            f"<td>{escape(r.unit)}</td>"
-            f"<td>{_disp(r.provenance.instrument_id)}</td>"
-            f"<td>{_precision_str(r.provenance)}</td>"
-            f"<td>{status}</td>"
-            f"<td>{_notes(r.flags, r.rejection_reasons)}</td>"
-            "</tr>"
-        )
-
-    # ── plot-level rows ──────────────────────────────────────────────────────
-    plot_rows_html = ""
-    for pid in sorted(plot_results):
-        for r in plot_results[pid]:
-            val = f"{r.value:.4f}" if r.value is not None else "&mdash;"
-            row_cls = ' class="rejected"' if r.is_rejected else ""
-            status = "Rejected" if r.is_rejected else "Accepted"
-            trees_used = (
-                f"{r.tree_count_used} / {r.tree_count_total}"
-                if r.tree_count_used is not None else "&mdash;"
-            )
-            plot_rows_html += (
-                f"<tr{row_cls}>"
-                f"<td>{_disp(pid)}</td>"
-                f"<td>{_disp(r.kpi_name.replace('_', ' '))}</td>"
-                f"<td>{val}</td>"
-                f"<td>{escape(r.unit)}</td>"
-                f"<td>{trees_used}</td>"
-                f"<td>{status}</td>"
-                f"<td>{_notes(r.flags, r.rejection_reasons)}</td>"
-                "</tr>"
-            )
-
-    # ── raw input rows ───────────────────────────────────────────────────────
-    input_rows_html = ""
-    for _, row in measurements_df.iterrows():
-        input_rows_html += (
-            "<tr>"
-            f"<td>{_disp(row['tree_id'])}</td>"
-            f"<td>{_disp(row.get('plot_id'))}</td>"
-            f"<td>{_disp(row['date'])}</td>"
-            f"<td>{_disp(str(row['measurement_type']).upper())}</td>"
-            f"<td>{_disp(row['value'])}</td>"
-            f"<td>{_disp(row.get('species'))}</td>"
-            f"<td>{_disp(row['instrument_id'])}</td>"
-            f"<td>{_disp(row.get('instrument_method'))}</td>"
-            f"<td>{_disp(row.get('status'))}</td>"
-            "</tr>"
-        )
+    tree_rows_html = "".join(_tree_row(r) for r in tree_results)
+    plot_rows_html = "".join(
+        _plot_row(pid, r)
+        for pid in sorted(plot_results)
+        for r in plot_results[pid]
+    )
+    input_rows_html = "".join(_measurement_row(m) for m in measurements)
 
     tree_section = f"""
     <h2>Tree-Level Results</h2>
@@ -270,7 +271,7 @@ def write_dashboard(
 
 <header>
   <h1>Forest KPI Dashboard</h1>
-  <div class="sub">Generated {dt.now().strftime("%Y-%m-%d %H:%M")} &nbsp;&middot;&nbsp; {len(results_list)} result(s) across {len(plot_results)} plot(s)</div>
+    <div class="sub">Generated {dt.now().strftime("%Y-%m-%d %H:%M")} &nbsp;&middot;&nbsp; {len(results_list)} result(s) across {len(plot_results)} plot(s)</div>
 </header>
 
 <div class="summary">
@@ -297,7 +298,7 @@ def write_dashboard(
   {plot_section}
 
   <details>
-    <summary>Raw Input Measurements &nbsp;({len(measurements_df)} rows)</summary>
+    <summary>Raw Input Measurements &nbsp;({len(measurements)} rows)</summary>
     <div class="tbl-wrap">
       <table>
         <thead><tr>

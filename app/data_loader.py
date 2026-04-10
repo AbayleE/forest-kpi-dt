@@ -1,17 +1,10 @@
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 import pandas as pd
 
 from models.kpi_model import Measurement
-
-
-def _optional_str(row: pd.Series, key: str) -> Optional[str]:
-    value = row.get(key)
-    if pd.isna(value):
-        return None
-    return str(value)
 
 
 def load_measurements(csv_path: Path) -> List[Measurement]:
@@ -26,10 +19,10 @@ def load_measurements(csv_path: Path) -> List[Measurement]:
                 measurement_type=str(row["measurement_type"]),
                 value=float(row["value"]),
                 instrument_id=str(row["instrument_id"]),
-                species=_optional_str(row, "species"),
-                instrument_method=_optional_str(row, "instrument_method"),
-                plot_id=_optional_str(row, "plot_id"),
-                status=_optional_str(row, "status"),
+                species=str(row["species"]) if not pd.isna(row.get("species")) else None,
+                instrument_method=str(row["instrument_method"]) if not pd.isna(row.get("instrument_method")) else None,
+                plot_id=str(row["plot_id"]) if not pd.isna(row.get("plot_id")) else None,
+                status=str(row["status"]) if not pd.isna(row.get("status")) else None,
             )
         )
 

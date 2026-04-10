@@ -1,20 +1,15 @@
 from typing import List
 
-from rdflib import ConjunctiveGraph, Graph, Literal
+from rdflib import Graph, Literal
 from rdflib.namespace import RDF, XSD
 
 from kg.namespace import FOREST, FD
 from kg.uri_factory import kpi_uri, measurement_uri, plot_uri, tree_uri
 from models.kpi_model import KPIResult, Measurement
 
-__all__ = [
-    "add_measurements_to_graph",
-    "add_kpi_results_to_graph",
-    "build_forest_graph",
-]
+__all__ = ["build_forest_graph"]
 
-# Maps kpi_name values produced by the KPI functions to the ontology sub-class
-# and whether the subject is a Plot (True) or a Tree (False).
+# Maps kpi_name values to the ontology sub-class and whether the subject is a Plot.
 _KPI_CLASS_MAP = {
     "Basal_Area":                (FOREST.BasalArea,           True),
     "Species_Diversity_Shannon": (FOREST.SpeciesDiversity,    True),
@@ -60,9 +55,9 @@ def add_kpi_results_to_graph(graph: Graph, kpi_results: List[KPIResult]) -> None
         )
 
         subject_uri = (
-            plot_uri(result.tree_id) if is_plot_level else tree_uri(result.tree_id)
+            plot_uri(result.entity_id) if is_plot_level else tree_uri(result.entity_id)
         )
-        k_uri = kpi_uri(result.tree_id, result.kpi_name)
+        k_uri = kpi_uri(result.entity_id, result.kpi_name)
 
         graph.add((k_uri, RDF.type, rdf_class))
         graph.add((subject_uri, FOREST.hasKPI, k_uri))
@@ -95,8 +90,8 @@ def add_kpi_results_to_graph(graph: Graph, kpi_results: List[KPIResult]) -> None
 def build_forest_graph(
     measurements: List[Measurement],
     kpi_results: List[KPIResult],
-) -> ConjunctiveGraph:
-    graph: ConjunctiveGraph = ConjunctiveGraph()
+) -> Graph:
+    graph = Graph()
     graph.bind("forest", FOREST)
     graph.bind("fd", FD)
 
