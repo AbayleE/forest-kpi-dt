@@ -2,8 +2,8 @@ from typing import Any, Dict, List
 
 import pandas as pd
 from rdflib import Graph
+from rdflib.query import Result
 
-from kg.namespace import FD
 from kg.uri_factory import plot_uri, tree_uri
 
 __all__ = [
@@ -122,7 +122,7 @@ ORDER BY ?timestamp
 )
 
 
-def _rows_to_df(results) -> pd.DataFrame:
+def _rows_to_df(results: Result) -> pd.DataFrame:
     rows: List[Dict[str, Any]] = []
     for row in results:
         rows.append({str(var): str(val) if val is not None else None for var, val in row.asdict().items()})
