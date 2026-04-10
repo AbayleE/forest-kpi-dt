@@ -1,3 +1,20 @@
+"""
+RDF namespace definitions for the Forest KPI knowledge graph.
+
+Two namespaces are used throughout the ``kg`` package:
+
+* ``FOREST`` (``http://forest-kpi.org/ontology#``) — ontology terms: RDF
+  classes (e.g. ``FOREST.Tree``) and properties (e.g. ``FOREST.hasKPI``).
+* ``FD`` (``http://forest-kpi.org/data/``) — data instance URIs for
+  concrete entities such as individual trees, plots, measurements and
+  computed KPI results.
+
+The attribute accesses on ``FOREST`` and ``FD`` below serve as a
+living catalogue of the vocabulary; rdflib resolves them dynamically so
+no explicit declaration is strictly required, but listing them here
+makes the ontology self-documenting.
+"""
+
 from rdflib import Namespace
 from rdflib.namespace import RDF, XSD  # re-exported for convenience
 
