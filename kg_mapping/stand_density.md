@@ -1,26 +1,54 @@
-Plot → hasKPI → StandDensity
+# A-PL-012 Stand Density — Knowledge Graph Mapping
 
-StandDensity → value → float
-StandDensity → unit → "trees/ha"
-StandDensity → computedFrom → Measurement (latest DBH per tree, status = alive)
-StandDensity → timestamp → max(measurement date)
-StandDensity → treeCountUsed → integer (alive trees counted)
-StandDensity → treeCountTotal → integer (all trees with a DBH measurement)
-StandDensity → methodVersion → "stand_density_v1"
+## Level
 
-Tree → belongsTo → Plot
-Tree → hasMeasurement → DBHMeasurement
-Tree → hasStatus → "alive" | "dead" | null
+Plot / Stand
 
-## Notes
+## Input entities / observations
 
-- Only trees with `status = "alive"` are counted in the density value
-- Trees with missing `status` are excluded and their count is added as flag `MISSING_STATUS_COUNT: N`
-- Density < 50 trees/ha → flag `OUTLIER_LOW`; > 10 000 trees/ha → flag `OUTLIER_HIGH`
-- `treeCountUsed` and `treeCountTotal` are real fields on `KPIResult`
+- `Plot`
+- `Tree`
+- latest valid structural observation per tree
+- `PlotArea`
+- `TreeStatus`
 
-## Implementation
+## KPI result node
 
-- KPI computation: `kpi/stand_density.py` → `compute_stand_density()`
-- RDF triples: `kg/graph_builder.py` → `add_kpi_results_to_graph()`, class `FOREST.StandDensity`
-- SPARQL queries: `kg/sparql_queries.py` → `query_kpis_for_plot(graph, plot_id)`
+- `StandDensityResult`
+
+## Core relations
+
+```text
+Plot -> hasMember -> Tree
+Tree -> hasStatus -> TreeStatus
+Plot -> hasKPI -> StandDensityResult
+StandDensityResult -> hasValue -> float
+StandDensityResult -> hasUnit -> "trees/ha"
+StandDensityResult -> computedFrom -> TreeStatus
+StandDensityResult -> usesPlotArea -> PlotArea
+StandDensityResult -> hasFlag -> string
+```
+
+## DQ / QC flags
+
+- `INVALID_AREA`
+- `NO_DATA`
+- `MISSING_STATUS_COUNT`
+- `OUTLIER_LOW`
+- `OUTLIER_HIGH`
+
+## Provenance / versioning
+
+- `inventory_date`
+- `measurement_method`
+- `method_version`
+- `tree_count_used`
+- `tree_count_total`
+
+## Source modality / canopy zone
+
+- `Inventory_Field (BelowCanopy)`
+
+## Temporal logic
+
+Snapshot aggregate over alive trees per hectare for the selected plot state.

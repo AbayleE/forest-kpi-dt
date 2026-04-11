@@ -1,5 +1,5 @@
-# Aboveground Biomass — Chave et al. (2014) or DBH-only fallback
 from typing import List, Optional
+
 from models.kpi_model import KPIResult, Provenance
 
 # Chave et al. (2014) pantropical allometric coefficients
@@ -10,7 +10,8 @@ CHAVE_EXPONENT = 0.976
 DBH_ONLY_COEFFICIENT = 0.1
 DBH_ONLY_EXPONENT = 2.5
 
-DEFAULT_WOOD_DENSITY = 0.57  # g/cm³, used when species density is unknown
+# Default wood density (g/cm³) when species-specific value is unavailable
+DEFAULT_WOOD_DENSITY = 0.57
 
 
 def compute_agb(
@@ -19,7 +20,6 @@ def compute_agb(
     height_m: Optional[float] = None,
     rho: Optional[float] = None,
     instrument_id: str = "UNKNOWN",
-    method_version: Optional[str] = None,
 ) -> Optional[KPIResult]:
     if dbh_cm <= 0:
         return None
@@ -33,11 +33,15 @@ def compute_agb(
 
     if height_m is not None:
         agb = CHAVE_COEFFICIENT * ((rho * (dbh_cm ** 2) * height_m) ** CHAVE_EXPONENT)
-        model_version = method_version or "Chave2014"
+        model_version = "Chave2014"
     else:
         agb = DBH_ONLY_COEFFICIENT * (dbh_cm ** DBH_ONLY_EXPONENT)
-        model_version = method_version or "DBH_only"
+        model_version = "DBH_only"
         flags.append("NO_HEIGHT")
+
+    if agb <= 0:
+        flags.append("WARNING: INVALID_RESULT")
+        rejection_reasons.append("INVALID_RESULT")
 
     provenance = Provenance(
         instrument_id=instrument_id,
@@ -46,7 +50,7 @@ def compute_agb(
     )
 
     return KPIResult(
-        entity_id=tree_id,
+        tree_id=tree_id,
         kpi_name="Aboveground_Biomass",
         value=round(agb, 4),
         unit="kg/tree",

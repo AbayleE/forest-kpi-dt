@@ -1,30 +1,51 @@
-# Basal Area — Knowledge Graph Mapping
+# A-PL-010 Basal Area — Knowledge Graph Mapping
 
-## Entities
+## Level
 
-- Plot
-- BasalArea
+Plot / Stand
 
-## Relations
+## Input entities / observations
 
+- `Plot`
+- `Tree`
+- latest valid `DBHObservation` per tree
+- `PlotArea`
+
+## KPI result node
+
+- `BasalAreaResult`
+
+## Core relations
+
+```text
+Plot -> hasMember -> Tree
+Tree -> hasObservation -> DBHObservation
+Plot -> hasKPI -> BasalAreaResult
+BasalAreaResult -> hasValue -> float
+BasalAreaResult -> hasUnit -> "m²/ha"
+BasalAreaResult -> computedFrom -> DBHObservation
+BasalAreaResult -> usesPlotArea -> PlotArea
+BasalAreaResult -> hasFlag -> string
 ```
-Plot → hasKPI → BasalArea
 
-BasalArea → value → float
-BasalArea → unit → "m²/ha"
-BasalArea → computedFrom → Tree DBH measurements (latest per tree)
-BasalArea → timestamp → null
-BasalArea → hasFlag → "MISSING_DBH_COUNT: N" (when DBH rows skipped)
-BasalArea → hasFlag → "WARNING: OUT_OF_TYPICAL_RANGE" (if value < 10 or > 60 m²/ha)
-```
+## DQ / QC flags
 
-## Notes
+- `INVALID_AREA`
+- `MISSING_DBH_COUNT`
+- `OUT_OF_TYPICAL_RANGE_WARNING`
 
-- `timestamp` is not set (null) — basal area is a plot-level aggregate without a single inventory date
-- Missing DBH counts are encoded as a flag string, not a separate field
+## Provenance / versioning
 
-## Implementation
+- `inventory_date` or effective aggregation date
+- `measurement_method`
+- `method_version`
+- `tree_count_used`
+- `tree_count_total`
 
-- KPI computation: `kpi/basal_area.py` → `compute_basal_area()`
-- RDF triples: `kg/graph_builder.py` → `add_kpi_results_to_graph()`, class `FOREST.BasalArea`
-- SPARQL queries: `kg/sparql_queries.py` → `query_kpis_for_plot(graph, plot_id)`
+## Source modality / canopy zone
+
+- `Inventory_Field (BelowCanopy)`
+
+## Temporal logic
+
+Snapshot-style aggregate using one valid DBH value per tree for the chosen plot state.

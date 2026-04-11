@@ -1,2 +1,2 @@
 pandas>=2.0
-rdflib>=6.3
+questionary>=1.10

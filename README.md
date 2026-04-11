@@ -132,3 +132,40 @@ Results are flagged and optionally rejected based on:
 - **Unknown species** — missing species triggers default thresholds
 
 Rejected results remain in output with `is_rejected=True` and documented `rejection_reasons`.
+
+
+## Mapping Update (16 KPI scope)
+
+This repository keeps the original project structure and executable KPI pipeline for the initially implemented 7 KPIs.
+In addition, the `kg_mapping/` folder has been expanded and standardized for a curated 16-KPI scope aligned with the newer KPI reference table.
+
+### Current mapping scope
+
+Tree level:
+- A-TR-001 DBH growth rate
+- A-TR-002 Height growth rate
+- A-TR-003 Aboveground biomass (AGB)
+- A-TR-004 Tree carbon stock
+
+Plot / Stand level:
+- A-PL-010 Basal area
+- A-PL-012 Stand density
+- A-PL-014 Species diversity (Shannon)
+- A-PL-015 Regeneration density
+
+Forest level:
+- A-FO-017 Forest area
+- A-FO-019 NDVI seasonal median
+- A-FO-021 Precipitation deficit (30d)
+- A-FO-022 Drought risk index
+- A-FO-023 Fire weather index
+
+In-situ / microclimate level:
+- C-PL-001 Soil moisture (7d mean)
+- C-PL-003 Air temperature anomaly
+- C-PL-004 CO₂ median (7d)
+
+### Important note
+
+Only the original 7 KPIs are currently implemented as executable Python computations in `kpi/`.
+The additional KPIs are included here as standardized knowledge-graph mapping concepts in `kg_mapping/` so that the repository can be extended consistently later without changing the overall project structure.
