@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 import json
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -17,14 +17,14 @@ class AppConfig:
     plots_path: Path
     output_csv_path: Path
     dashboard_path: Path
-    kg_output_path: Path
 
 
-def load_app_config(root_dir: Optional[Path] = None) -> AppConfig:
+def load_app_config(root_dir: Path | None = None) -> AppConfig:
     base_dir = root_dir or ROOT_DIR
     config_path = base_dir / "config" / "config.json"
 
-    cfg = json.loads(config_path.read_text(encoding="utf-8"))
+    with config_path.open(encoding="utf-8") as f:
+        cfg = json.load(f)
 
     return AppConfig(
         dbh_species_config=cfg["species_max_dbh_rates"],
@@ -33,7 +33,6 @@ def load_app_config(root_dir: Optional[Path] = None) -> AppConfig:
         instrument_config=cfg["instrument_precision"],
         data_path=base_dir / "data" / "tree_measurements.csv",
         plots_path=base_dir / "data" / "plots.csv",
-        output_csv_path=base_dir / "output" / "output.csv",
-        dashboard_path=base_dir / "output" / "dashboard.html",
-        kg_output_path=base_dir / "output" / "forest_kg.ttl",
+        output_csv_path=base_dir / "output.csv",
+        dashboard_path=base_dir / "dashboard.html",
     )

@@ -1,32 +1,59 @@
-# Height Growth — Knowledge Graph Mapping
+# A-TR-002 Height Growth Rate — Knowledge Graph Mapping
 
-## Entities
+## Level
 
-- Tree
-- HeightObservation
-- HeightGrowthRate
+Tree
 
-## Relations
+## Input entities / observations
 
+- `Tree`
+- `HeightObservation`
+- `Timestamp`
+- `InstrumentOrProduct`
+
+## KPI result node
+
+- `HeightGrowthRateResult`
+
+## Core relations
+
+```text
+Tree -> hasObservation -> HeightObservation
+HeightObservation -> hasValue -> float
+HeightObservation -> hasUnit -> "m"
+HeightObservation -> observedAt -> datetime
+HeightObservation -> measuredWith -> InstrumentOrProduct
+Tree -> hasKPI -> HeightGrowthRateResult
+HeightGrowthRateResult -> hasValue -> float
+HeightGrowthRateResult -> hasUnit -> "m/yr"
+HeightGrowthRateResult -> computedFrom -> HeightObservation
+HeightGrowthRateResult -> hasMethodVersion -> string
+HeightGrowthRateResult -> hasFlag -> string
 ```
-Tree → hasMeasurement → HeightObservation
 
-HeightObservation → value → float
-HeightObservation → timestamp → datetime
+## DQ / QC flags
 
-Tree → hasKPI → HeightGrowthRate
+- `INSUFFICIENT_OBSERVATIONS`
+- `INVALID_TIME_WINDOW`
+- `NEGATIVE_GROWTH`
+- `EXTREME_GROWTH`
+- `LOW_CONFIDENCE_EO`
 
-HeightGrowthRate → value → float
-HeightGrowthRate → unit → "m/yr"
-HeightGrowthRate → timestamp → datetime
-HeightGrowthRate → computedFrom → HeightObservation
-HeightGrowthRate → methodVersion → string
-HeightGrowthRate → instrument_id → string
-HeightGrowthRate → hasFlag → string
-```
+## Provenance / versioning
 
-## Implementation
+- `instrument_id` or `product_id`
+- `instrument_method` or `processing_chain`
+- `calibration_date` when applicable
+- `method_version`
+- `validation_error` or `confidence_score` for EO products
 
-- KPI computation: `kpi/height_growth.py` → `compute_height_growth()`
-- RDF triples: `kg/graph_builder.py` → `add_kpi_results_to_graph()`, class `FOREST.HeightGrowth`
-- SPARQL queries: `kg/sparql_queries.py` → `query_tree_kpis(graph, tree_id)`
+## Source modality / canopy zone
+
+- `Inventory_Field (BelowCanopy)`
+- `Below-canopy LiDAR / TLS (BelowCanopy)`
+- `UAV LiDAR (AboveCanopy)`
+- `EO imagery (AboveCanopy)`
+
+## Temporal logic
+
+Computed from earliest and latest valid height observations; EO-derived height should carry explicit uncertainty and confidence metadata.

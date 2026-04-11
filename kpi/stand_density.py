@@ -1,8 +1,6 @@
-# Stand Density — living trees per hectare (status == "alive" only)
 from typing import List, Optional
 
-from kpi.utils import get_latest_dbh_per_tree, inventory_provenance
-from models.kpi_model import KPIResult, Measurement
+from models.kpi_model import KPIResult, Measurement, Provenance
 
 
 def compute_stand_density(
@@ -14,7 +12,14 @@ def compute_stand_density(
     if area_ha is None or area_ha <= 0:
         return None
 
-    trees = get_latest_dbh_per_tree(measurements)
+    latest_per_tree: dict = {}
+    for m in measurements:
+        if m.measurement_type != "dbh":
+            continue
+        if m.tree_id not in latest_per_tree or m.date > latest_per_tree[m.tree_id].date:
+            latest_per_tree[m.tree_id] = m
+
+    trees = list(latest_per_tree.values())
 
     if not trees:
         return None
@@ -44,13 +49,18 @@ def compute_stand_density(
         flags.append("OUTLIER_LOW")
 
     return KPIResult(
-        entity_id=plot_id,
+        tree_id=plot_id,
         kpi_name="Stand_Density",
         value=round(density, 2),
         unit="trees/ha",
         timestamp=max(t.date for t in trees),
         flags=flags,
-        provenance=inventory_provenance(method_version),
+        provenance=Provenance(
+            instrument_id="inventory",
+            calibration_date=None,
+            method_version=method_version,
+            instrument_method="field_inventory",
+        ),
         is_rejected=False,
         rejection_reasons=[],
         tree_count_used=count_alive,

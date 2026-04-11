@@ -1,24 +1,50 @@
-Plot → hasKPI → SpeciesDiversity
+# A-PL-014 Species Diversity (Shannon) — Knowledge Graph Mapping
 
-SpeciesDiversity → value → float
-SpeciesDiversity → unit → "dimensionless"
-SpeciesDiversity → computedFrom → Tree species distribution (latest DBH per tree)
-SpeciesDiversity → timestamp → max(measurement date)
-SpeciesDiversity → methodVersion → "shannon_v2"
-SpeciesDiversity → hasFlag → "UNKNOWN_SPECIES_PRESENT" (if any tree has no species)
-SpeciesDiversity → hasFlag → "LOW_SPECIES_CONFIDENCE" (if species coverage < 90%)
-SpeciesDiversity → hasFlag → "INSUFFICIENT_SAMPLE_SIZE" (rejected, if < 5 trees)
+## Level
 
-Tree → belongsTo → Plot
-Tree → hasSpecies → Species
+Plot / Stand
 
-## Notes
+## Input entities / observations
 
-- `treeCountUsed`, `treeCountTotal`, `speciesCount`, and `coverage` are not separate fields;
-  coverage threshold and sample-size checks are encoded as flags
+- `Plot`
+- `Tree`
+- `SpeciesAssignment` per tree
 
-## Implementation
+## KPI result node
 
-- KPI computation: `kpi/shannon_index.py` → `compute_shannon_from_measurements()`
-- RDF triples: `kg/graph_builder.py` → `add_kpi_results_to_graph()`, class `FOREST.SpeciesDiversity`
-- SPARQL queries: `kg/sparql_queries.py` → `query_kpis_for_plot(graph, plot_id)`
+- `ShannonDiversityResult`
+
+## Core relations
+
+```text
+Plot -> hasMember -> Tree
+Tree -> hasSpecies -> SpeciesAssignment
+Plot -> hasKPI -> ShannonDiversityResult
+ShannonDiversityResult -> hasValue -> float
+ShannonDiversityResult -> hasUnit -> "dimensionless"
+ShannonDiversityResult -> computedFrom -> SpeciesAssignment
+ShannonDiversityResult -> hasFlag -> string
+```
+
+## DQ / QC flags
+
+- `UNKNOWN_SPECIES_PRESENT`
+- `LOW_SPECIES_CONFIDENCE`
+- `INSUFFICIENT_SAMPLE_SIZE`
+
+## Provenance / versioning
+
+- `inventory_date`
+- `taxonomy_normalization_version`
+- `method_version`
+- `tree_count_used`
+- `tree_count_total`
+- `species_count`
+
+## Source modality / canopy zone
+
+- `Inventory_Field (BelowCanopy)`
+
+## Temporal logic
+
+Snapshot diversity calculation from the current species distribution of trees in the plot.

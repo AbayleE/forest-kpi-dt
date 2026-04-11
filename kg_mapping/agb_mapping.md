@@ -1,37 +1,56 @@
-# AGB (Aboveground Biomass) — Knowledge Graph Mapping
+# A-TR-003 Aboveground Biomass (AGB) — Knowledge Graph Mapping
 
-## Entities
+## Level
 
-- Tree
-- AGB
+Tree
 
-## Relations
+## Input entities / observations
 
+- `Tree`
+- `DBHObservation`
+- optional `HeightObservation`
+- optional `Species`
+- optional `WoodDensityParameter`
+
+## KPI result node
+
+- `AGBResult`
+
+## Core relations
+
+```text
+Tree -> hasKPI -> AGBResult
+AGBResult -> hasValue -> float
+AGBResult -> hasUnit -> "kg/tree"
+AGBResult -> computedFrom -> DBHObservation
+AGBResult -> computedFrom -> HeightObservation (optional)
+AGBResult -> usesParameter -> WoodDensityParameter
+AGBResult -> hasEquationType -> "pantropical" | "DBH_only"
+AGBResult -> hasModelVersion -> string
+AGBResult -> hasFlag -> string
 ```
-Tree → hasKPI → AGB
 
-AGB → value → float
-AGB → unit → "kg/tree"
-AGB → timestamp → null
-AGB → computedFrom → DBH
-AGB → computedFrom → Height (optional)
-AGB → modelVersion → "Chave2014" | "DBH_only"
-AGB → woodDensitySource → species_wood_density config | default (0.57 g/cm³)
-AGB → hasFlag → string
-```
+## DQ / QC flags
 
-## Model Selection
+- `INVALID_DBH`
+- `NO_HEIGHT`
+- `ASSUMED_DENSITY`
+- `INVALID_AGB`
+- `OUT_OF_RANGE_WARNING`
 
-- If `height_m` is provided: Chave et al. (2014) pantropical allometric model (`AGB = 0.0673 × (ρ × DBH² × H)^0.976`)
-- If `height_m` is absent: DBH-only power-law fallback (`AGB = 0.1 × DBH^2.5`); flag `NO_HEIGHT` is added
+## Provenance / versioning
 
-## Wood Density
+- `model_version`
+- `equation_type`
+- `parameter_source`
+- `instrument_id` inherited from upstream measurements
+- `uncertainty_estimate`
 
-- Species-specific `ρ` (g/cm³) is read from `species_wood_density` in `config.json`
-- If species is unknown or not configured, `ρ = 0.57` (pantropical mean) is used and flag `ASSUMED_DENSITY` is added
+## Source modality / canopy zone
 
-## Implementation
+- `Inventory_Field (BelowCanopy)` as primary structural source
+- upstream height may additionally come from `Below-canopy LiDAR / TLS`, `UAV LiDAR`, or `EO imagery` depending on the observation used
 
-- KPI computation: `kpi/agb.py` → `compute_agb()`
-- RDF triples: `kg/graph_builder.py` → `add_kpi_results_to_graph()`, class `FOREST.AbovegroundBiomass`
-- SPARQL queries: `kg/sparql_queries.py` → `query_tree_kpis(graph, tree_id)`
+## Temporal logic
+
+Point-in-time estimate using the most recent valid structural observations available for the tree.
