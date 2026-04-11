@@ -1,0 +1,43 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+.venv/
+venv/
+env/
+
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+.mypy_cache/
+
+output/
+.ruff_cache/
+kg/sparql_queries.py
+.pytest_cache/
+
+*.log
+
+# OS metadata
+Thumbs.db
+.DS_Store
+
+# Test coverage
+.coverage
+htmlcov/
+
+# Backup files
+*.bak
+
+/docs
+/output
+dashboard.html
+output.csv
