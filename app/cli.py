@@ -26,7 +26,7 @@ def select_kpis():
         print("Forest KPI Digital Twin\n")
         for i, (_, label) in enumerate(MENU, 1):
             print(f"  {i}. {label}")
-        print("\nEnter numbers, or 'all'\n")
+        print("\nEnter numbers or 'all'\n")
 
         try:
             raw = input("> ").strip().lower()

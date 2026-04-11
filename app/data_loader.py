@@ -7,6 +7,16 @@ import pandas as pd
 from models.kpi_model import Measurement
 
 
+def optional_str(value: str):
+    return None if pd.isna(value) else str(value)
+
+
+def load_plots(csv_path: Path) -> Dict[str, float]:
+    df = pd.read_csv(csv_path)
+    # return dict(zip(df["plot_id"], df["area_ha"]))
+    return df.set_index("plot_id")["area_ha"].to_dict()
+
+
 def load_measurements(csv_path: Path) -> List[Measurement]:
     dataframe = pd.read_csv(csv_path)
     measurements: List[Measurement] = []
@@ -19,16 +29,11 @@ def load_measurements(csv_path: Path) -> List[Measurement]:
                 measurement_type=str(row["measurement_type"]),
                 value=float(row["value"]),
                 instrument_id=str(row["instrument_id"]),
-                species=str(row["species"]) if not pd.isna(row.get("species")) else None,
-                instrument_method=str(row["instrument_method"]) if not pd.isna(row.get("instrument_method")) else None,
-                plot_id=str(row["plot_id"]) if not pd.isna(row.get("plot_id")) else None,
-                status=str(row["status"]) if not pd.isna(row.get("status")) else None,
+                species=optional_str(row["species"]),
+                instrument_method=optional_str(row["instrument_method"]),
+                plot_id=optional_str(row["plot_id"]),
+                status=optional_str(row["status"]),
             )
         )
 
     return measurements
-
-
-def load_plots(csv_path: Path) -> Dict[str, float]:
-    df = pd.read_csv(csv_path)
-    return dict(zip(df["plot_id"], df["area_ha"]))

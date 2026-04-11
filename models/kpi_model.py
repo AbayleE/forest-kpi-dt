@@ -6,7 +6,7 @@ from typing import List, Optional
 @dataclass
 class Provenance:
     instrument_id: str
-    calibration_date: Optional[str]
+    calibration_date: Optional[datetime]
     method_version: str
     instrument_method: Optional[str] = None
     precision_cm: Optional[float] = None
@@ -18,7 +18,7 @@ class Provenance:
 class Measurement:
     tree_id: str
     date: datetime
-    measurement_type: str          # "dbh" | "height"
+    measurement_type: str  # "dbh" | "height"
     value: float
     instrument_id: str
     species: Optional[str] = None
@@ -38,6 +38,6 @@ class KPIResult:
     flags: List[str]
     provenance: Provenance
     is_rejected: bool = False
-    rejection_reasons: List[str] = field(default_factory=list)
+    rejection_reasons: List[str] = None
     tree_count_used: Optional[int] = None
     tree_count_total: Optional[int] = None

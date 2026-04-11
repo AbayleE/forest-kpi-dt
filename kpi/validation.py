@@ -5,36 +5,37 @@ from kpi.utils import get_max_growth_rate, resolve_instrument_precision
 from models.kpi_model import KPIResult, Measurement, Provenance
 
 DAYS_PER_YEAR = 365.25
-MIN_INTERVAL_YEARS = 0.5
 
 
 def prepare_growth_window(
     measurements: List[Measurement],
 ) -> Optional[Tuple[Measurement, Measurement, float, List[str]]]:
-    flags: List[str] = []
 
-    valid = [
-        m for m in measurements
-        if m.value is not None and m.date is not None
-    ]
+    flags: List[str] = []
+    valid = []
+
+    for m in measurements:
+        if m.value is not None and m.date is not None:
+            valid.append(m)
+
     if len(valid) < 2:
         return None
 
     valid.sort(key=lambda m: m.date)
+
     earliest = valid[0]
     latest = valid[-1]
-    delta_t = (latest.date - earliest.date).days / DAYS_PER_YEAR
 
-    if delta_t <= 0:
+    delta_days = (latest.date - earliest.date).days
+    delta_years = delta_days / DAYS_PER_YEAR
+
+    if delta_years <= 0:
         return None
-
-    if delta_t < MIN_INTERVAL_YEARS:
-        flags.append("WARNING: SHORT_INTERVAL_LOW_CONFIDENCE")
 
     if earliest.value <= 0 or latest.value <= 0:
         return None
 
-    return earliest, latest, delta_t, flags
+    return earliest, latest, delta_years, flags
 
 
 def build_provenance(
@@ -42,6 +43,7 @@ def build_provenance(
     method_version: str,
     instrument_config: Optional[Dict] = None,
 ) -> Provenance:
+
     precision_info = resolve_instrument_precision(
         measurement.instrument_method,
         instrument_config or {},
@@ -68,33 +70,35 @@ def compute_growth(
     instrument_config: Optional[Dict] = None,
     default_max_rate: float = 2.0,
 ) -> Optional[KPIResult]:
-    species_config = species_config or {}
-    instrument_config = instrument_config or {}
+
+    if species_config is None:
+        species_config = {}
+
+    if instrument_config is None:
+        instrument_config = {}
 
     window = prepare_growth_window(measurements)
-    if window is None:
+    if not window:
         return None
 
-    earliest, latest, delta_t, flags = window
     rejection_reasons: List[str] = []
 
+    earliest, latest, delta_t, flags = window
+
     growth_rate = (latest.value - earliest.value) / delta_t
-
-    species = latest.species
-    species_label = species or "unknown"
-
-    max_rate = get_max_growth_rate(species, species_config, default=default_max_rate)
-
     if growth_rate < 0:
         flags.append("WARNING: NEGATIVE_GROWTH")
         rejection_reasons.append("NEGATIVE_GROWTH")
 
+    species = latest.species
+    max_rate = get_max_growth_rate(species, species_config, default=default_max_rate)
+
     if growth_rate > max_rate:
         flags.append(
-            f"WARNING: EXCEEDS_MAX_GROWTH ({growth_rate:.2f} > {max_rate} {unit}, species={species_label})"
+            f"WARNING: EXCEEDS_MAX_GROWTH ({growth_rate:.4f} > {max_rate} {unit}, species={species})"
         )
         rejection_reasons.append(
-            f"EXCEEDS_MAX_GROWTH (species={species_label}, max={max_rate} {unit})"
+            f"EXCEEDS_MAX_GROWTH (species={species}, max={max_rate} {unit})"
         )
 
     provenance = build_provenance(latest, method_version, instrument_config)

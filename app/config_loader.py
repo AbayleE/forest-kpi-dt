@@ -7,7 +7,7 @@ from typing import Any, Dict, Optional
 ROOT_DIR = Path(__file__).resolve().parent.parent
 
 
-@dataclass(frozen=True)
+@dataclass()
 class AppConfig:
     dbh_species_config: Dict[str, float]
     height_species_config: Dict[str, float]
@@ -23,17 +23,16 @@ class AppConfig:
 def load_app_config(root_dir: Optional[Path] = None) -> AppConfig:
     base_dir = root_dir or ROOT_DIR
     config_path = base_dir / "config" / "config.json"
-
-    cfg = json.loads(config_path.read_text(encoding="utf-8"))
+    config = json.loads(config_path.read_text(encoding="utf-8"))
 
     return AppConfig(
-        dbh_species_config=cfg["species_max_dbh_rates"],
-        height_species_config=cfg["species_max_height_rates"],
-        wood_density_config=cfg["species_wood_density"],
-        instrument_config=cfg["instrument_precision"],
-        data_path=base_dir / "data" / "tree_measurements.csv",
-        plots_path=base_dir / "data" / "plots.csv",
-        output_csv_path=base_dir / "output" / "output.csv",
-        dashboard_path=base_dir / "output" / "dashboard.html",
-        kg_output_path=base_dir / "output" / "forest_kg.ttl",
+        dbh_species_config = config["species_max_dbh_rates"],
+        height_species_config = config["species_max_height_rates"],
+        wood_density_config = config["species_wood_density"],
+        instrument_config = config["instrument_precision"],
+        data_path = base_dir / "data" / "tree_measurements.csv",
+        plots_path = base_dir / "data" / "plots.csv",
+        output_csv_path = base_dir / "output" / "output.csv",
+        dashboard_path = base_dir / "output" / "dashboard.html",
+        kg_output_path = base_dir / "output" / "forest_kg.ttl",
     )

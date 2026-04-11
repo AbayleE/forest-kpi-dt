@@ -21,6 +21,7 @@ def compute_agb(
     instrument_id: str = "UNKNOWN",
     method_version: Optional[str] = None,
 ) -> Optional[KPIResult]:
+
     if dbh_cm <= 0:
         return None
 
@@ -29,15 +30,15 @@ def compute_agb(
 
     if rho is None:
         rho = DEFAULT_WOOD_DENSITY
-        flags.append("ASSUMED_DENSITY")
+        flags.append("WARNING: ASSUMED_DENSITY")
 
     if height_m is not None:
-        agb = CHAVE_COEFFICIENT * ((rho * (dbh_cm ** 2) * height_m) ** CHAVE_EXPONENT)
+        agb = CHAVE_COEFFICIENT * ((rho * (dbh_cm**2) * height_m) ** CHAVE_EXPONENT)
         model_version = method_version or "Chave2014"
     else:
-        agb = DBH_ONLY_COEFFICIENT * (dbh_cm ** DBH_ONLY_EXPONENT)
+        agb = DBH_ONLY_COEFFICIENT * (dbh_cm**DBH_ONLY_EXPONENT)
         model_version = method_version or "DBH_only"
-        flags.append("NO_HEIGHT")
+        flags.append("WARNING: NO_HEIGHT")
 
     provenance = Provenance(
         instrument_id=instrument_id,

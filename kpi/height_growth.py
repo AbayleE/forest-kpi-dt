@@ -10,7 +10,7 @@ DEFAULT_MAX_GROWTH_RATE = 1.5  # m/yr
 def compute_height_growth(
     tree_id: str,
     measurements: List[Measurement],
-    method_version: str = "v1.1",
+    method_version: str = "v1.0",
     species_config: Optional[Dict[str, float]] = None,
     instrument_config: Optional[Dict] = None,
     default_max_rate: float = DEFAULT_MAX_GROWTH_RATE,
