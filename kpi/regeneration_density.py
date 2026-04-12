@@ -1,6 +1,7 @@
 # Regeneration Density — saplings (DBH < threshold) per hectare
 from typing import List, Optional
 
+from kg.uri_factory import measurement_uri
 from kpi.utils import get_latest_dbh_per_tree, inventory_provenance
 from models.kpi_model import KPILevel, KPIResult, Measurement
 
@@ -38,6 +39,12 @@ def compute_regeneration_from_measurements(
     sap_count = len(saplings)
     regen_density = sap_count / area_ha
 
+    source_uris = [
+        str(measurement_uri(s.tree_id, s.measurement_type, s.date.isoformat()))
+        for s in saplings
+        if s.date is not None
+    ]
+
     if regen_density > MAX_REGEN_DENSITY:
         flags.append("WARNING: EXTREME_DENSITY")
 
@@ -61,4 +68,5 @@ def compute_regeneration_from_measurements(
         kpi_level=KPILevel.PLOT,
         is_rejected=len(rejection_reasons) > 0,
         rejection_reasons=rejection_reasons,
+        computed_from_uris=source_uris,
     )

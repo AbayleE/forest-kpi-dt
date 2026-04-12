@@ -1,6 +1,7 @@
 # Shared helpers for growth-rate KPI computations (dbh_growth + height_growth)
 from typing import Dict, List, Optional, Tuple
 
+from kg.uri_factory import measurement_uri
 from kpi.utils import get_max_growth_rate, resolve_instrument_precision
 from models.kpi_model import KPILevel, KPIResult, Measurement, Provenance
 
@@ -51,7 +52,6 @@ def build_provenance(
 
     return Provenance(
         instrument_id=measurement.instrument_id,
-        calibration_date=None,
         method_version=method_version,
         instrument_method=measurement.instrument_method,
         precision_cm=precision_info.get("precision_cm"),
@@ -104,6 +104,18 @@ def compute_growth(
 
     provenance = build_provenance(latest, method_version, instrument_config)
 
+    source_uris = [
+        str(
+            measurement_uri(
+                tree_id, earliest.measurement_type, earliest.date.isoformat()
+            )
+        ),
+        str(measurement_uri(tree_id, latest.measurement_type, latest.date.isoformat())),
+    ]
+    # deduplicate in case earliest == latest (single-observation edge case)
+    seen = set()
+    source_uris = [u for u in source_uris if not (u in seen or seen.add(u))]
+
     return KPIResult(
         entity_id=tree_id,
         kpi_name=kpi_name,
@@ -115,4 +127,5 @@ def compute_growth(
         kpi_level=kpi_level,
         is_rejected=len(rejection_reasons) > 0,
         rejection_reasons=rejection_reasons,
+        computed_from_uris=source_uris,
     )

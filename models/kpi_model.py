@@ -13,7 +13,6 @@ class KPILevel(Enum):
 @dataclass
 class Provenance:
     instrument_id: str
-    calibration_date: Optional[datetime]
     method_version: str
     instrument_method: Optional[str] = None
     precision_cm: Optional[float] = None
@@ -46,6 +45,7 @@ class KPIResult:
     provenance: Provenance
     kpi_level: KPILevel
     is_rejected: bool = False
-    rejection_reasons: List[str] = None
+    rejection_reasons: List[str] = field(default_factory=list)
     tree_count_used: Optional[int] = None
     tree_count_total: Optional[int] = None
+    computed_from_uris: List[str] = field(default_factory=list)

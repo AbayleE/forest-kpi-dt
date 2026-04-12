@@ -1,32 +1,56 @@
-# DBH Growth — Knowledge Graph Mapping
+# A-TR-001 DBH Growth Rate — Knowledge Graph Mapping
 
-## Entities
+## Level
 
-- Tree
-- DBH_Observation
-- DBH_Growth_KPI
+Tree
 
-## Relations
+## Input entities / observations
 
+- `Tree`
+- `DBHObservation`
+- `Timestamp`
+- `Instrument`
+
+## KPI result node
+
+- `DBHGrowthRateResult`
+
+## Core relations
+
+```text
+Tree -> hasObservation -> DBHObservation
+DBHObservation -> hasValue -> float
+DBHObservation -> hasUnit -> "cm"
+DBHObservation -> observedAt -> datetime
+DBHObservation -> measuredWith -> Instrument
+Tree -> hasKPI -> DBHGrowthRateResult
+DBHGrowthRateResult -> hasValue -> float
+DBHGrowthRateResult -> hasUnit -> "cm/yr"
+DBHGrowthRateResult -> computedFrom -> DBHObservation
+DBHGrowthRateResult -> hasMethodVersion -> string
+DBHGrowthRateResult -> hasFlag -> string
 ```
-Tree → hasMeasurement → DBH_Observation
 
-DBH_Observation → value → float
-DBH_Observation → timestamp → datetime
+## DQ / QC flags
 
-Tree → hasKPI → DBH_Growth_KPI
+- `INSUFFICIENT_OBSERVATIONS`
+- `INVALID_TIME_WINDOW`
+- `NEGATIVE_GROWTH`
+- `EXTREME_GROWTH`
+- `SHORT_INTERVAL_WARNING`
 
-DBH_Growth_KPI → value → float
-DBH_Growth_KPI → unit → "cm/yr"
-DBH_Growth_KPI → timestamp → datetime
-DBH_Growth_KPI → computedFrom → DBH_Observation
-DBH_Growth_KPI → methodVersion → string
-DBH_Growth_KPI → instrument_id → string
-DBH_Growth_KPI → hasFlag → string
-```
+## Provenance / versioning
 
-## Implementation
+- `instrument_id`
+- `instrument_method`
+- `calibration_date`
+- `method_version`
+- `species_threshold_source`
 
-- KPI computation: `kpi/dbh_growth.py` → `compute_dbh_growth()`
-- RDF triples: `kg/graph_builder.py` → `add_kpi_results_to_graph()`, class `FOREST.DBHGrowth`
-- SPARQL queries: `kg/sparql_queries.py` → `query_tree_kpis(graph, tree_id)`
+## Source modality / canopy zone
+
+- `Inventory_Field (BelowCanopy)`
+
+## Temporal logic
+
+Computed from earliest and latest valid DBH observations; annualized over the observed interval.

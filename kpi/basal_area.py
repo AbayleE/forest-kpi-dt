@@ -3,6 +3,7 @@
 import math
 from typing import List, Optional
 
+from kg.uri_factory import measurement_uri
 from kpi.utils import inventory_provenance
 from models.kpi_model import KPILevel, KPIResult, Measurement
 
@@ -23,6 +24,7 @@ def compute_basal_area(
     total_ba = 0.0
     tree_count = 0
     missing_count = 0
+    used_uris: List[str] = []
 
     for measurement in dbh_measurements:
         if measurement.value is None or measurement.value <= 0:
@@ -32,6 +34,16 @@ def compute_basal_area(
         radius_m = (measurement.value / 2) / 100
         total_ba += math.pi * (radius_m**2)
         tree_count += 1
+        if measurement.date is not None:
+            used_uris.append(
+                str(
+                    measurement_uri(
+                        measurement.tree_id,
+                        measurement.measurement_type,
+                        measurement.date.isoformat(),
+                    )
+                )
+            )
 
     if tree_count == 0:
         return None
@@ -57,4 +69,5 @@ def compute_basal_area(
         kpi_level=KPILevel.PLOT,
         is_rejected=len(rejection_reasons) > 0,
         rejection_reasons=rejection_reasons,
+        computed_from_uris=used_uris,
     )

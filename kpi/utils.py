@@ -1,14 +1,12 @@
-﻿from datetime import datetime
-from typing import Dict, List, Optional
+﻿from typing import Dict, List, Optional
 
 from models.kpi_model import Measurement, Provenance
 
 
-def inventory_provenance(method_version: str, date: Optional[datetime] = None) -> Provenance:
+def inventory_provenance(method_version: str) -> Provenance:
 
     return Provenance(
         instrument_id="inventory",
-        calibration_date=date,
         method_version=method_version,
         instrument_method="field_inventory",
     )

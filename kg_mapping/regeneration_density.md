@@ -1,22 +1,49 @@
-Plot → hasKPI → RegenerationDensity
+# A-PL-015 Regeneration Density — Knowledge Graph Mapping
 
-RegenerationDensity → value → float
-RegenerationDensity → unit → "saplings/ha"
-RegenerationDensity → computedFrom → Tree DBH measurements
-RegenerationDensity → timestamp → inventory_date
-RegenerationDensity → saplingCount → integer
-RegenerationDensity → areaUsed → float
-RegenerationDensity → saplingThresholdDBH → float
-RegenerationDensity → methodVersion → "regen_density_v2"
+## Level
 
-Tree → belongsTo → Plot
-Tree → hasMeasurement → DBHMeasurement
-DBHMeasurement → value → float
+Plot / Stand
 
-Tree → classifiedAs → Sapling (if DBH < threshold)
+## Input entities / observations
 
-## Implementation
+- `Plot`
+- `RegenerationObservation` or sapling classification
+- `PlotArea`
+- threshold parameter
 
-- KPI computation: `kpi/regeneration_density.py` → `compute_regeneration_from_measurements()`
-- RDF triples: `kg/graph_builder.py` → `add_kpi_results_to_graph()`, class `FOREST.RegenerationDensity`
-- SPARQL queries: `kg/sparql_queries.py` → `query_kpis_for_plot(graph, plot_id)`
+## KPI result node
+
+- `RegenerationDensityResult`
+
+## Core relations
+
+```text
+Plot -> hasKPI -> RegenerationDensityResult
+RegenerationDensityResult -> hasValue -> float
+RegenerationDensityResult -> hasUnit -> "saplings/ha"
+RegenerationDensityResult -> computedFrom -> RegenerationObservation
+RegenerationDensityResult -> usesPlotArea -> PlotArea
+RegenerationDensityResult -> usesThreshold -> parameter
+RegenerationDensityResult -> hasFlag -> string
+```
+
+## DQ / QC flags
+
+- `INVALID_AREA`
+- `INVALID_COUNT`
+- `INCONSISTENT_THRESHOLD`
+
+## Provenance / versioning
+
+- `survey_date`
+- `sampling_design`
+- `height_threshold_m` or sapling definition
+- `method_version`
+
+## Source modality / canopy zone
+
+- `Field regeneration survey (BelowCanopy)`
+
+## Temporal logic
+
+Point-in-time or seasonal/annual survey aggregate depending on the regeneration protocol used.

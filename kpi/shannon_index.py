@@ -3,6 +3,7 @@ import math
 from collections import Counter
 from typing import List
 
+from kg.uri_factory import measurement_uri
 from kpi.utils import get_latest_dbh_per_tree, inventory_provenance
 from models.kpi_model import KPILevel, KPIResult, Measurement
 
@@ -62,6 +63,12 @@ def compute_shannon_from_measurements(
     valid_dates = [t.date for t in trees if t.date is not None]
     timestamp = max(valid_dates) if valid_dates else None
 
+    source_uris = [
+        str(measurement_uri(t.tree_id, t.measurement_type, t.date.isoformat()))
+        for t in trees
+        if t.date is not None
+    ]
+
     return KPIResult(
         entity_id=plot_id,
         kpi_name="Species_Diversity_Shannon",
@@ -73,4 +80,5 @@ def compute_shannon_from_measurements(
         kpi_level=KPILevel.PLOT,
         is_rejected=False,
         rejection_reasons=[],
+        computed_from_uris=source_uris,
     )

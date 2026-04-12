@@ -102,6 +102,8 @@ def _compute_agb_results(
             height_m=height.value if height else None,
             rho=rho,
             instrument_id=dbh.instrument_id,
+            dbh_measurement=dbh,
+            height_measurement=height,
         )
 
         if agb_result:

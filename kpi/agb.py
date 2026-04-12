@@ -1,6 +1,7 @@
 # Aboveground Biomass — Chave et al. (2014) or DBH-only fallback
 from typing import List, Optional
-from models.kpi_model import KPILevel, KPIResult, Provenance
+from kg.uri_factory import measurement_uri
+from models.kpi_model import KPILevel, KPIResult, Measurement, Provenance
 
 # Chave et al. (2014) pantropical allometric coefficients
 CHAVE_COEFFICIENT = 0.0673
@@ -20,6 +21,8 @@ def compute_agb(
     rho: Optional[float] = None,
     instrument_id: str = "UNKNOWN",
     method_version: Optional[str] = None,
+    dbh_measurement: Optional[Measurement] = None,
+    height_measurement: Optional[Measurement] = None,
 ) -> Optional[KPIResult]:
 
     if dbh_cm <= 0:
@@ -42,9 +45,30 @@ def compute_agb(
 
     provenance = Provenance(
         instrument_id=instrument_id,
-        calibration_date=None,
         method_version=model_version,
     )
+
+    source_uris = []
+    if dbh_measurement is not None and dbh_measurement.date is not None:
+        source_uris.append(
+            str(
+                measurement_uri(
+                    tree_id,
+                    dbh_measurement.measurement_type,
+                    dbh_measurement.date.isoformat(),
+                )
+            )
+        )
+    if height_measurement is not None and height_measurement.date is not None:
+        source_uris.append(
+            str(
+                measurement_uri(
+                    tree_id,
+                    height_measurement.measurement_type,
+                    height_measurement.date.isoformat(),
+                )
+            )
+        )
 
     return KPIResult(
         entity_id=tree_id,
@@ -57,4 +81,5 @@ def compute_agb(
         kpi_level=KPILevel.TREE,
         is_rejected=len(rejection_reasons) > 0,
         rejection_reasons=rejection_reasons,
+        computed_from_uris=source_uris,
     )

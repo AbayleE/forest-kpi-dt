@@ -1,6 +1,7 @@
 # Stand Density — living trees per hectare (status == "alive" only)
 from typing import List, Optional
 
+from kg.uri_factory import measurement_uri
 from kpi.utils import get_latest_dbh_per_tree, inventory_provenance
 from models.kpi_model import KPILevel, KPIResult, Measurement
 
@@ -42,6 +43,7 @@ def compute_stand_density(
     count_total = len(trees)
     count_alive = 0
     missing_status = 0
+    used_uris: List[str] = []
 
     for tree in trees:
 
@@ -54,6 +56,14 @@ def compute_stand_density(
 
         if tree.status.lower() == "alive":
             count_alive += 1
+            if tree.date is not None:
+                used_uris.append(
+                    str(
+                        measurement_uri(
+                            tree.tree_id, tree.measurement_type, tree.date.isoformat()
+                        )
+                    )
+                )
 
     density = count_alive / area_ha
 
@@ -81,4 +91,5 @@ def compute_stand_density(
         rejection_reasons=rejection_reasons,
         tree_count_used=count_alive,
         tree_count_total=count_total,
+        computed_from_uris=used_uris,
     )
