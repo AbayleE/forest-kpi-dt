@@ -1,6 +1,6 @@
 # Aboveground Biomass — Chave et al. (2014) or DBH-only fallback
 from typing import List, Optional
-from models.kpi_model import KPIResult, Provenance
+from models.kpi_model import KPILevel, KPIResult, Provenance
 
 # Chave et al. (2014) pantropical allometric coefficients
 CHAVE_COEFFICIENT = 0.0673
@@ -54,6 +54,7 @@ def compute_agb(
         timestamp=None,
         flags=flags,
         provenance=provenance,
+        kpi_level=KPILevel.TREE,
         is_rejected=len(rejection_reasons) > 0,
         rejection_reasons=rejection_reasons,
     )

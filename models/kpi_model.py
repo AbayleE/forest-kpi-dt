@@ -1,6 +1,13 @@
 from dataclasses import dataclass, field
 from datetime import datetime
+from enum import Enum
 from typing import List, Optional
+
+
+class KPILevel(Enum):
+    TREE = "tree"
+    PLOT = "plot"
+    FOREST = "forest"
 
 
 @dataclass
@@ -37,6 +44,7 @@ class KPIResult:
     timestamp: Optional[datetime]
     flags: List[str]
     provenance: Provenance
+    kpi_level: KPILevel
     is_rejected: bool = False
     rejection_reasons: List[str] = None
     tree_count_used: Optional[int] = None

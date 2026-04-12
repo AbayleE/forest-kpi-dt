@@ -2,7 +2,7 @@
 from typing import List, Optional
 
 from kpi.utils import get_latest_dbh_per_tree, inventory_provenance
-from models.kpi_model import KPIResult, Measurement
+from models.kpi_model import KPILevel, KPIResult, Measurement
 
 SAPLING_DBH_THRESHOLD_CM = 5.0
 MIN_TREE_SAMPLE_SIZE = 10
@@ -58,6 +58,7 @@ def compute_regeneration_from_measurements(
         timestamp=latest_date,
         flags=flags,
         provenance=inventory_provenance(method_version),
+        kpi_level=KPILevel.PLOT,
         is_rejected=len(rejection_reasons) > 0,
         rejection_reasons=rejection_reasons,
     )

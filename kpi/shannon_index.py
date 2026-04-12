@@ -4,7 +4,7 @@ from collections import Counter
 from typing import List
 
 from kpi.utils import get_latest_dbh_per_tree, inventory_provenance
-from models.kpi_model import KPIResult, Measurement
+from models.kpi_model import KPILevel, KPIResult, Measurement
 
 MIN_TREE_SAMPLE_SIZE = 5
 MIN_SPECIES_COVERAGE = 0.9
@@ -30,6 +30,7 @@ def compute_shannon_from_measurements(
             timestamp=None,
             flags=["WARNING: INSUFFICIENT_SAMPLE_SIZE"],
             provenance=inventory_provenance(method_version),
+            kpi_level=KPILevel.PLOT,
             is_rejected=True,
             rejection_reasons=["INSUFFICIENT_SAMPLE_SIZE"],
         )
@@ -69,6 +70,7 @@ def compute_shannon_from_measurements(
         timestamp=timestamp,
         flags=flags,
         provenance=inventory_provenance(method_version),
+        kpi_level=KPILevel.PLOT,
         is_rejected=False,
         rejection_reasons=[],
     )

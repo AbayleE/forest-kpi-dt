@@ -4,7 +4,7 @@ import math
 from typing import List, Optional
 
 from kpi.utils import inventory_provenance
-from models.kpi_model import KPIResult, Measurement
+from models.kpi_model import KPILevel, KPIResult, Measurement
 
 
 def compute_basal_area(
@@ -54,6 +54,7 @@ def compute_basal_area(
         timestamp=None,
         flags=flags,
         provenance=provenance,
+        kpi_level=KPILevel.PLOT,
         is_rejected=len(rejection_reasons) > 0,
         rejection_reasons=rejection_reasons,
     )

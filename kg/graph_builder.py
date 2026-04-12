@@ -1,23 +1,23 @@
 from typing import List
-
 from rdflib import Graph, Literal
 from rdflib.namespace import RDF, XSD
 
 from kg.namespace import FOREST, FD
 from kg.uri_factory import kpi_uri, measurement_uri, plot_uri, tree_uri
-from models.kpi_model import KPIResult, Measurement
+from models.kpi_model import KPILevel, KPIResult, Measurement
 
 __all__ = ["build_forest_graph"]
 
-# Maps kpi_name values to the ontology sub-class and whether the subject is a Plot.
+
+# Maps kpi_name values to the ontology RDF class.
 _KPI_CLASS_MAP = {
-    "Basal_Area": (FOREST.BasalArea, True),
-    "Species_Diversity_Shannon": (FOREST.SpeciesDiversity, True),
-    "Regeneration_Density": (FOREST.RegenerationDensity, True),
-    "Stand_Density": (FOREST.StandDensity, True),
-    "Aboveground_Biomass": (FOREST.AbovegroundBiomass, False),
-    "DBH_Growth_Rate": (FOREST.DBHGrowth, False),
-    "Height_Growth_Rate": (FOREST.HeightGrowth, False),
+    "Basal_Area": FOREST.BasalArea,
+    "Species_Diversity_Shannon": FOREST.SpeciesDiversity,
+    "Regeneration_Density": FOREST.RegenerationDensity,
+    "Stand_Density": FOREST.StandDensity,
+    "Aboveground_Biomass": FOREST.AbovegroundBiomass,
+    "DBH_Growth_Rate": FOREST.DBHGrowth,
+    "Height_Growth_Rate": FOREST.HeightGrowth,
 }
 
 
@@ -44,18 +44,18 @@ def add_measurements_to_graph(graph: Graph, measurements: List[Measurement]) -> 
             graph.add((m_uri, FOREST.value, Literal(m.value)))
 
         if date_iso:
-            graph.add(graph.add((m_uri, FOREST.timestamp, Literal(date_iso))))
+            graph.add((m_uri, FOREST.timestamp, Literal(date_iso)))
 
 
 def add_kpi_results_to_graph(graph: Graph, kpi_results: List[KPIResult]) -> None:
     for result in kpi_results:
-        rdf_class, is_plot_level = _KPI_CLASS_MAP.get(
-            result.kpi_name,
-            (FOREST.KPIResult, False),
-        )
+        rdf_class = _KPI_CLASS_MAP.get(result.kpi_name, FOREST.KPIResult)
+        level = result.kpi_level
 
         subject_uri = (
-            plot_uri(result.entity_id) if is_plot_level else tree_uri(result.entity_id)
+            plot_uri(result.entity_id)
+            if level == KPILevel.PLOT
+            else tree_uri(result.entity_id)
         )
 
         k_uri = kpi_uri(result.entity_id, result.kpi_name)
@@ -64,25 +64,13 @@ def add_kpi_results_to_graph(graph: Graph, kpi_results: List[KPIResult]) -> None
         graph.add((subject_uri, FOREST.hasKPI, k_uri))
 
         if result.value is not None:
-            graph.add((k_uri, FOREST.value, Literal(result.value, datatype=XSD.double)))
+            graph.add((k_uri, FOREST.value, Literal(result.value)))
 
         graph.add((k_uri, FOREST.unit, Literal(result.unit)))
-        graph.add(
-            (
-                k_uri,
-                FOREST.isRejected,
-                Literal(result.is_rejected, datatype=XSD.boolean),
-            )
-        )
+        graph.add((k_uri, FOREST.isRejected, Literal(result.is_rejected)))
 
         if result.timestamp is not None:
-            graph.add(
-                (
-                    k_uri,
-                    FOREST.timestamp,
-                    Literal(result.timestamp.isoformat(), datatype=XSD.dateTime),
-                )
-            )
+            graph.add((k_uri, FOREST.timestamp, Literal(result.timestamp)))
 
         for flag in result.flags:
             graph.add((k_uri, FOREST.hasFlag, Literal(flag)))
@@ -98,22 +86,10 @@ def add_kpi_results_to_graph(graph: Graph, kpi_results: List[KPIResult]) -> None
         )
 
         if result.tree_count_used is not None:
-            graph.add(
-                (
-                    k_uri,
-                    FOREST.treeCountUsed,
-                    Literal(result.tree_count_used, datatype=XSD.integer),
-                )
-            )
+            graph.add((k_uri, FOREST.treeCountUsed, Literal(result.tree_count_used)))
 
         if result.tree_count_total is not None:
-            graph.add(
-                (
-                    k_uri,
-                    FOREST.treeCountTotal,
-                    Literal(result.tree_count_total, datatype=XSD.integer),
-                )
-            )
+            graph.add((k_uri, FOREST.treeCountTotal, Literal(result.tree_count_total)))
 
 
 def build_forest_graph(

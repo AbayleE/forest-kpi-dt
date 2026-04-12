@@ -2,7 +2,7 @@
 from typing import List, Optional
 
 from kpi.utils import get_latest_dbh_per_tree, inventory_provenance
-from models.kpi_model import KPIResult, Measurement
+from models.kpi_model import KPILevel, KPIResult, Measurement
 
 MIN_DBH_CM = 10.0
 MAX_OUTLIER_DENSITY = 10000
@@ -34,6 +34,7 @@ def compute_stand_density(
             timestamp=None,
             flags=[],
             provenance=inventory_provenance(method_version),
+            kpi_level=KPILevel.PLOT,
             is_rejected=True,
             rejection_reasons=rejection_reasons,
         )
@@ -75,6 +76,7 @@ def compute_stand_density(
         timestamp=max(t.date for t in trees),
         flags=flags,
         provenance=inventory_provenance(method_version),
+        kpi_level=KPILevel.PLOT,
         is_rejected=len(rejection_reasons) > 0,
         rejection_reasons=rejection_reasons,
         tree_count_used=count_alive,

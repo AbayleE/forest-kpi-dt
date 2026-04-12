@@ -2,7 +2,7 @@
 from typing import Dict, List, Optional, Tuple
 
 from kpi.utils import get_max_growth_rate, resolve_instrument_precision
-from models.kpi_model import KPIResult, Measurement, Provenance
+from models.kpi_model import KPILevel, KPIResult, Measurement, Provenance
 
 DAYS_PER_YEAR = 365.25
 
@@ -69,6 +69,7 @@ def compute_growth(
     species_config: Optional[Dict[str, float]] = None,
     instrument_config: Optional[Dict] = None,
     default_max_rate: float = 2.0,
+    kpi_level: KPILevel = KPILevel.TREE,
 ) -> Optional[KPIResult]:
 
     if species_config is None:
@@ -111,6 +112,7 @@ def compute_growth(
         timestamp=latest.date,
         flags=flags,
         provenance=provenance,
+        kpi_level=kpi_level,
         is_rejected=len(rejection_reasons) > 0,
         rejection_reasons=rejection_reasons,
     )
