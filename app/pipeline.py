@@ -15,6 +15,7 @@ from kpi.shannon_index import compute_shannon_from_measurements
 from kpi.stand_density import compute_stand_density
 from kpi.utils import get_latest_dbh_per_tree
 from models.kpi_model import KPIResult, Measurement
+from rdflib import Graph
 
 ALL_KPIS: Set[str] = {
     "dbh_growth",
@@ -152,7 +153,9 @@ def _compute_plot_results(
     return results
 
 
-def run_pipeline(config: AppConfig, selected_kpis: Set[str]) -> List[KPIResult]:
+def run_pipeline(
+    config: AppConfig, selected_kpis: Set[str]
+) -> Tuple[List[KPIResult], Graph]:
     tree_measurements = load_measurements(config.data_path)
 
     grouped: Dict[Tuple[str, str], List[Measurement]] = {}
@@ -175,4 +178,4 @@ def run_pipeline(config: AppConfig, selected_kpis: Set[str]) -> List[KPIResult]:
     kg = build_forest_graph(tree_measurements, results)
     serialize_graph(kg, config.kg_output_path)
 
-    return results
+    return results, kg

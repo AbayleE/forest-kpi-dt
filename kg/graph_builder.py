@@ -1,6 +1,6 @@
 from typing import List
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import RDF, XSD
+from rdflib.namespace import RDF
 
 from kg.namespace import FOREST, FD
 from kg.uri_factory import instrument_uri, kpi_uri, measurement_uri, plot_uri, tree_uri
